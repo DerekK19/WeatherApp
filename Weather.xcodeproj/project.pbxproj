@@ -32,7 +32,7 @@
 
 /* Begin PBXFileReference section */
 		21B45EE1DF274C6784F0CA1B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		6568B09016E2BA5700C1B6F0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		6568B09016E2BA5700C1B6F0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		657FA640152D720100AD7E75 /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		657FA644152D720100AD7E75 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		657FA646152D720100AD7E75 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -49,14 +49,14 @@
 		65837161152EB47400038587 /* gauge-needle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gauge-needle.png"; path = "images/gauge-needle.png"; sourceTree = "<group>"; };
 		65837163152EB8DC00038587 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		65837165152ED87C00038587 /* wood-grain@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wood-grain@2x.png"; path = "images/wood-grain@2x.png"; sourceTree = "<group>"; };
-		6593D0A7170664FD00C24F06 /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Logging.h; path = General/Logging.h; sourceTree = "<group>"; };
-		65AF6A8915314DA100D79E7C /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
-		65AF6A8B15314E1500D79E7C /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		659C0C5D1706735D00BD6B60 /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
+		65AF6A8915314DA100D79E7C /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../icon@2x.png"; sourceTree = "<group>"; };
+		65AF6A8B15314E1500D79E7C /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
 		65AF6A8D153154B500D79E7C /* label-holder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "label-holder.png"; path = "images/label-holder.png"; sourceTree = "<group>"; };
 		65AF6A8F1532697300D79E7C /* gauge-background-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gauge-background-1.png"; path = "images/gauge-background-1.png"; sourceTree = "<group>"; };
 		65AF6A901532697300D79E7C /* gauge-background-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gauge-background-2.png"; path = "images/gauge-background-2.png"; sourceTree = "<group>"; };
 		65B8490E16E7083300F6202E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		65C5253416E5B0FE000CFC1C /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = "<group>"; };
+		65C5253416E5B0FE000CFC1C /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		65C5253616E5B458000CFC1C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		65C5253816E5B464000CFC1C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		ADADC52271B44D6A8D52BB68 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -84,10 +84,8 @@
 		657FA635152D720000AD7E75 = {
 			isa = PBXGroup;
 			children = (
-				6568B09016E2BA5700C1B6F0 /* Default-568h@2x.png */,
-				65AF6A8B15314E1500D79E7C /* icon.png */,
-				65AF6A8915314DA100D79E7C /* icon@2x.png */,
-				657FA661152D721A00AD7E75 /* Libraries */,
+				659C0C5D1706735D00BD6B60 /* Logging.h */,
+				65C5253416E5B0FE000CFC1C /* Podfile */,
 				657FA64A152D720100AD7E75 /* Weather */,
 				657FA643152D720100AD7E75 /* Frameworks */,
 				657FA641152D720100AD7E75 /* Products */,
@@ -135,22 +133,15 @@
 		657FA64B152D720100AD7E75 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				65C5253416E5B0FE000CFC1C /* Podfile */,
 				657FA64C152D720100AD7E75 /* Weather-Info.plist */,
 				657FA64D152D720100AD7E75 /* InfoPlist.strings */,
 				657FA650152D720100AD7E75 /* main.m */,
 				657FA652152D720100AD7E75 /* Weather-Prefix.pch */,
+				6568B09016E2BA5700C1B6F0 /* Default-568h@2x.png */,
+				65AF6A8B15314E1500D79E7C /* icon.png */,
+				65AF6A8915314DA100D79E7C /* icon@2x.png */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		657FA661152D721A00AD7E75 /* Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				6593D0A7170664FD00C24F06 /* Logging.h */,
-			);
-			name = Libraries;
-			path = ../../Libraries;
 			sourceTree = "<group>";
 		};
 		6583715D152EA90A00038587 /* Images */ = {
