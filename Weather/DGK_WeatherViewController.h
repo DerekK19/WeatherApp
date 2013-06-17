@@ -12,6 +12,8 @@
 #define MODE_CALIBRATE 0
 #define MODE_TEMPERATURE 1
 #define MODE_HUMIDITY 2
+#define MODE_WIND 3
+#define MODE_RAIN 4
 
 @interface DGK_WeatherViewController : UIViewController <CPTPlotDataSource>
 

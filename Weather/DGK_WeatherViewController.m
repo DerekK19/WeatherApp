@@ -183,6 +183,12 @@
                 case MODE_HUMIDITY:
                     return [record objectForKey:@"h"];
                     break;
+                case MODE_WIND:
+                    return [record objectForKey:@"s"];
+                    break;
+                case MODE_RAIN:
+                    return [record objectForKey:@"r"];
+                    break;
             }
         }
         return [NSNumber numberWithFloat:0.0];
@@ -217,6 +223,7 @@
 - (IBAction)handleGraphTap:(UISwipeGestureRecognizer *)sender
 {
     DEBUGLog(@"");
+    when = [NSDate date];
     [self willRefresh:sender];
 }
 
@@ -307,8 +314,11 @@
         NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
         [formatter setDateFormat:@"yyyy-MM-dd"];
         NSString *date =[formatter stringFromDate:when];
+        NSString *source = mode == MODE_TEMPERATURE ? @"temperature" :
+                           mode == MODE_HUMIDITY ? @"humidity" :
+                           mode == MODE_WIND ? @"wind" : @"rain";
 
-        url = [NSURL URLWithString:[NSString stringWithFormat:URL,date,mode == MODE_TEMPERATURE ? @"temperature" : @"humidity"]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:URL,date,source]];
         request = [NSURLRequest requestWithURL:url];
         operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
                                                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
@@ -334,6 +344,24 @@
                                  // X Axis == time, Y Axis = humidity
                                  for (NSDictionary *record in graphData) {
                                      Float32 val = [((NSNumber *)[record objectForKey:@"h"])floatValue];
+                                     if (val < loY) loY = val; if (val > hiY) hiY = val;
+                                 }
+                                 overlap = 2;
+                                 yInterval = 10;
+                                 break;
+                             case MODE_WIND:
+                                 // X Axis == time, Y Axis = wind speed
+                                 for (NSDictionary *record in graphData) {
+                                     Float32 val = [((NSNumber *)[record objectForKey:@"s"])floatValue];
+                                     if (val < loY) loY = val; if (val > hiY) hiY = val;
+                                 }
+                                 overlap = 2;
+                                 yInterval = 10;
+                                 break;
+                             case MODE_RAIN:
+                                 // X Axis == time, Y Axis = rainfall
+                                 for (NSDictionary *record in graphData) {
+                                     Float32 val = [((NSNumber *)[record objectForKey:@"r"])floatValue];
                                      if (val < loY) loY = val; if (val > hiY) hiY = val;
                                  }
                                  overlap = 2;
@@ -383,20 +411,30 @@
 
 - (IBAction)willToggle:(id)sender
 {
-    mode = mode == MODE_TEMPERATURE ? MODE_HUMIDITY : MODE_TEMPERATURE;
+    mode = mode == MODE_TEMPERATURE ? MODE_HUMIDITY :
+           mode == MODE_HUMIDITY ? MODE_WIND :
+           mode == MODE_WIND ? MODE_RAIN : MODE_TEMPERATURE;
     switch(mode)
     {
-        case MODE_TEMPERATURE:
+        case MODE_CALIBRATE:
             _gauge.image = [UIImage imageNamed:@"gauge-background-1"];
             _label.text = @"Temperature";
             break;
-        case MODE_CALIBRATE:
+        case MODE_TEMPERATURE:
             _gauge.image = [UIImage imageNamed:@"gauge-background-1"];
             _label.text = @"Temperature";
             break;
         case MODE_HUMIDITY:
             _gauge.image = [UIImage imageNamed:@"gauge-background-2"];
             _label.text = @"Humidity";
+            break;
+        case MODE_WIND:
+            _gauge.image = [UIImage imageNamed:@"gauge-background-1"];
+            _label.text = @"Wind speed";
+            break;
+        case MODE_RAIN:
+            _gauge.image = [UIImage imageNamed:@"gauge-background-1"];
+            _label.text = @"Rainfall";
             break;
     }
     [self willRefresh:nil];
