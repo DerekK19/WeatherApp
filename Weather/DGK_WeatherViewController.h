@@ -20,7 +20,7 @@
 {
     UIImageView *arrowImageView;
     CPTXYGraph *graph;
-    NSArray *graphData;
+    NSMutableArray *graphData;
     int mode;
     NSDate *when;
     float lastAngle;

@@ -149,12 +149,6 @@
     // Release any retained subviews of the main view.
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ||
-            interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 #pragma core plot data source
 
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot
@@ -324,7 +318,32 @@
                                                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
                      {
                          DEBUGLog(@"%@", JSON);
-                         graphData = JSON;
+                         graphData = [[NSMutableArray alloc]initWithArray:JSON];
+                         // Initial scaling of data (Wind to MPH etc)
+                         switch(mode)
+                         {
+                             case MODE_WIND:
+                                 // X Axis == time, Y Axis = wind speed
+                                 for (int i = 0; i < [graphData count]; i++) {
+                                     NSMutableDictionary *mRecord = [[NSMutableDictionary alloc]initWithDictionary:[graphData objectAtIndex:i]];
+                                     Float32 val = [((NSNumber *)[mRecord objectForKey:@"s"])floatValue];
+                                     val *= 2.23693629; // Wind show in MPH
+                                     [mRecord setValue:[NSNumber numberWithFloat:val] forKey:@"s"];
+                                     [graphData replaceObjectAtIndex:i withObject:mRecord];
+                                 }
+                                 break;
+                             case MODE_RAIN:
+                                 // X Axis == time, Y Axis = rainfall
+                                 for (int i = 0; i < [graphData count]; i++) {
+                                     NSMutableDictionary *mRecord = [[NSMutableDictionary alloc]initWithDictionary:[graphData objectAtIndex:i]];
+                                     Float32 val = [((NSNumber *)[mRecord objectForKey:@"r"])floatValue];
+                                     val *= 10.f; // Rain scaled up by 10
+                                     [mRecord setValue:[NSNumber numberWithFloat:val] forKey:@"r"];
+                                     [graphData replaceObjectAtIndex:i withObject:mRecord];
+                                 }
+                                 break;
+                         }
+                         // Get range of data for graph limits
                          Float32 loY = 1000.0;
                          Float32 hiY = 0.0;
                          Float32 overlap = 0;
@@ -356,7 +375,9 @@
                                      if (val < loY) loY = val; if (val > hiY) hiY = val;
                                  }
                                  overlap = 2;
-                                 yInterval = 10;
+                                 yInterval = 2;
+                                 loY = 10;
+                                 hiY -= 5;
                                  break;
                              case MODE_RAIN:
                                  // X Axis == time, Y Axis = rainfall
@@ -365,7 +386,9 @@
                                      if (val < loY) loY = val; if (val > hiY) hiY = val;
                                  }
                                  overlap = 2;
-                                 yInterval = 10;
+                                 yInterval = 5;
+                                 loY = 10;
+                                 hiY -= 5;
                                  break;
                          }
                          loY -= 10;
