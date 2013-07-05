@@ -230,7 +230,7 @@
     NSURLRequest *request;
     if ([_viewChanger selectedSegmentIndex] == 0)
     {
-        url = [NSURL URLWithString:@"http://xyzzy.gordonknight.co.uk:8080"];
+        url = [NSURL URLWithString:@"http://xyzzy.gordonknight.co.uk:8040/weather/current.json"];
         request = [NSURLRequest requestWithURL:url];
         
         operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
@@ -258,6 +258,16 @@
                                  value = [formatter numberFromString:[JSON valueForKey: @"Humidity"]];
                                  angle = ([value floatValue]-30) / 40 * M_PI * 1.74; // Range is 30-70 % Humidity
                                  display = [NSString stringWithFormat:@"%2.1f %% RH", [value floatValue]];
+                                 break;
+                             case MODE_RAIN:
+                                 value = [formatter numberFromString:[JSON valueForKey: @"Rainfall"]];
+                                 angle = [value floatValue] / 10 * M_PI * 1.74; // Range is 0-10 mm
+                                 display = [NSString stringWithFormat:@"%2.1f mm", [value floatValue]];
+                                 break;
+                             case MODE_WIND:
+                                 value = [formatter numberFromString:[JSON valueForKey: @"Wind"]];
+                                 angle = [value floatValue] / 50 * M_PI * 1.74; // Range is 0-50 m/s
+                                 display = [NSString stringWithFormat:@"%2.1f m/s", [value floatValue]];
                                  break;
                          }
                          if (value == nil) return;
