@@ -20,11 +20,16 @@
 {
     UIImageView *arrowImageView;
     CPTXYGraph *graph;
-    NSMutableArray *graphData;
+    NSMutableArray *graphData1;
+    NSMutableArray *graphData2;
     int mode;
     NSDate *when;
     float lastAngle;
 }
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *SegmentsVerticalSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *ImageVerticalSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *ImageHorizontalSpaceConstraint;
 
 @property (nonatomic, retain) IBOutlet UISegmentedControl *viewChanger;
 @property (nonatomic, retain) IBOutlet UIView *gaugeView;
