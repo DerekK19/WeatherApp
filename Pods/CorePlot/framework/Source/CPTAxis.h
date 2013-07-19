@@ -1,7 +1,6 @@
 #import "CPTDefinitions.h"
 #import "CPTLayer.h"
 #import "CPTTextStyle.h"
-#import <Foundation/Foundation.h>
 
 /// @file
 
@@ -55,7 +54,7 @@ CPTAxisLabelingPolicy;
 
 /** @brief @optional This method gives the delegate a chance to create custom labels for each tick.
  *  It can be used with any labeling policy. Returning @NO will cause the axis not
- *  to update the labels. It is then the delegate&rsquo;s responsiblity to do this.
+ *  to update the labels. It is then the delegate&rsquo;s responsibility to do this.
  *  @param axis The axis.
  *  @param locations The locations of the major ticks.
  *  @return @YES if the axis class should proceed with automatic labeling.
@@ -64,7 +63,7 @@ CPTAxisLabelingPolicy;
 
 /** @brief @optional This method gives the delegate a chance to create custom labels for each minor tick.
  *  It can be used with any labeling policy. Returning @NO will cause the axis not
- *  to update the labels. It is then the delegate&rsquo;s responsiblity to do this.
+ *  to update the labels. It is then the delegate&rsquo;s responsibility to do this.
  *  @param axis The axis.
  *  @param locations The locations of the minor ticks.
  *  @return @YES if the axis class should proceed with automatic labeling.
@@ -106,14 +105,15 @@ CPTAxisLabelingPolicy;
     CPTTextStyle *labelTextStyle;
     CPTTextStyle *minorTickLabelTextStyle;
     CPTTextStyle *titleTextStyle;
-    NSNumberFormatter *labelFormatter;
-    NSNumberFormatter *minorTickLabelFormatter;
+    NSFormatter *labelFormatter;
+    NSFormatter *minorTickLabelFormatter;
     BOOL labelFormatterChanged;
     BOOL minorLabelFormatterChanged;
     NSSet *axisLabels;
     NSSet *minorTickAxisLabels;
     CPTAxisTitle *axisTitle;
     NSString *title;
+    NSAttributedString *attributedTitle;
     CGFloat titleOffset;
     CGFloat titleRotation;
     NSDecimal titleLocation;
@@ -127,6 +127,7 @@ CPTAxisLabelingPolicy;
     NSMutableArray *mutableBackgroundLimitBands;
     BOOL separateLayers;
     CPTShadow *labelShadow;
+    CPTShadow *minorTickLabelShadow;
     __cpt_weak CPTPlotArea *plotArea;
     __cpt_weak CPTGridLines *minorGridLines;
     __cpt_weak CPTGridLines *majorGridLines;
@@ -150,6 +151,7 @@ CPTAxisLabelingPolicy;
 @property (nonatomic, readwrite, retain) CPTAxisTitle *axisTitle;
 @property (nonatomic, readwrite, assign) CGFloat titleOffset;
 @property (nonatomic, readwrite, copy) NSString *title;
+@property (nonatomic, readwrite, copy) NSAttributedString *attributedTitle;
 @property (nonatomic, readwrite, assign) CGFloat titleRotation;
 @property (nonatomic, readwrite, assign) NSDecimal titleLocation;
 @property (nonatomic, readonly, assign) NSDecimal defaultTitleLocation;
@@ -166,13 +168,14 @@ CPTAxisLabelingPolicy;
 @property (nonatomic, readwrite, assign) CPTAlignment minorTickLabelAlignment;
 @property (nonatomic, readwrite, copy) CPTTextStyle *labelTextStyle;
 @property (nonatomic, readwrite, copy) CPTTextStyle *minorTickLabelTextStyle;
-@property (nonatomic, readwrite, retain) NSNumberFormatter *labelFormatter;
-@property (nonatomic, readwrite, retain) NSNumberFormatter *minorTickLabelFormatter;
+@property (nonatomic, readwrite, retain) NSFormatter *labelFormatter;
+@property (nonatomic, readwrite, retain) NSFormatter *minorTickLabelFormatter;
 @property (nonatomic, readwrite, retain) NSSet *axisLabels;
 @property (nonatomic, readwrite, retain) NSSet *minorTickAxisLabels;
 @property (nonatomic, readonly, assign) BOOL needsRelabel;
 @property (nonatomic, readwrite, retain) NSArray *labelExclusionRanges;
 @property (nonatomic, readwrite, retain) CPTShadow *labelShadow;
+@property (nonatomic, readwrite, retain) CPTShadow *minorTickLabelShadow;
 /// @}
 
 /// @name Major Ticks
@@ -217,6 +220,11 @@ CPTAxisLabelingPolicy;
 @property (nonatomic, readonly, cpt_weak_property) __cpt_weak CPTGridLines *minorGridLines;
 @property (nonatomic, readonly, cpt_weak_property) __cpt_weak CPTGridLines *majorGridLines;
 @property (nonatomic, readonly, retain) CPTAxisSet *axisSet;
+/// @}
+
+/// @name Title
+/// @{
+-(void)updateAxisTitle;
 /// @}
 
 /// @name Labels

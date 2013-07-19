@@ -1,9 +1,10 @@
 #import "CPTLegend.h"
 
-#import "CPTDefinitions.h"
 #import "CPTExceptions.h"
+#import "CPTFill.h"
 #import "CPTGraph.h"
 #import "CPTLegendEntry.h"
+#import "CPTLineStyle.h"
 #import "CPTPlot.h"
 #import "CPTTextStyle.h"
 #import "CPTUtilities.h"
@@ -473,13 +474,13 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
              ( (desiredColumnCount == 0) || (col < desiredColumnCount) ) ) {
             CGFloat left        = columnPositions[col];
             CGFloat rowPosition = rowPositions[row];
-            CGRect swatchRect   = CPTAlignRectToUserSpace( context, CPTRectMake(left,
-                                                                                rowPosition + (actualRowHeights[row] - theSwatchSize.height) / CPTFloat(2.0),
-                                                                                theSwatchSize.width,
-                                                                                theSwatchSize.height) );
+            CGRect swatchRect   = CPTRectMake(left,
+                                              rowPosition + (actualRowHeights[row] - theSwatchSize.height) * CPTFloat(0.5),
+                                              theSwatchSize.width,
+                                              theSwatchSize.height);
             BOOL legendShouldDrawSwatch = YES;
             if ( delegateCanDraw ) {
-                legendShouldDrawSwatch = [theDelegate      legend:self
+                legendShouldDrawSwatch = [theDelegate legend:self
                                           shouldDrawSwatchAtIndex:legendEntry.index
                                                           forPlot:legendEntry.plot
                                                            inRect:swatchRect
@@ -494,7 +495,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
 
             left += theSwatchSize.width + theOffset;
 
-            [legendEntry drawTitleInRect:CPTAlignRectToUserSpace( context, CPTRectMake(left, rowPosition, actualColumnWidths[col], actualRowHeights[row]) )
+            [legendEntry drawTitleInRect:CPTAlignRectToUserSpace( context, CPTRectMake(left, rowPosition, actualColumnWidths[col] + CPTFloat(1.0), actualRowHeights[row]) )
                                inContext:context
                                    scale:self.contentsScale];
         }
@@ -610,7 +611,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
             if ( row < desiredRowHeights.count ) {
                 id desiredRowHeight = [desiredRowHeights objectAtIndex:row];
                 if ( [desiredRowHeight isKindOfClass:numberClass] ) {
-                    maxTitleHeight[row] = MAX(maxTitleHeight[row], [(NSNumber *) desiredRowHeight cgFloatValue]);
+                    maxTitleHeight[row] = MAX(maxTitleHeight[row], [(NSNumber *)desiredRowHeight cgFloatValue]);
                 }
             }
         }
@@ -618,10 +619,10 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
         if ( (desiredColumnCount == 0) || (col < desiredColumnCount) ) {
             maxTitleWidth[col] = MAX(MAX(maxTitleWidth[col], titleSize.width), theSwatchSize.width);
 
-            if ( row < desiredColumnWidths.count ) {
+            if ( col < desiredColumnWidths.count ) {
                 id desiredColumnWidth = [desiredColumnWidths objectAtIndex:col];
                 if ( [desiredColumnWidth isKindOfClass:numberClass] ) {
-                    maxTitleWidth[col] = MAX(maxTitleWidth[col], [(NSNumber *) desiredColumnWidth cgFloatValue]);
+                    maxTitleWidth[col] = MAX(maxTitleWidth[col], [(NSNumber *)desiredColumnWidth cgFloatValue]);
                 }
             }
         }

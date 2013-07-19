@@ -1,8 +1,6 @@
 #import "CPTPlotAreaFrame.h"
 
 #import "CPTAxisSet.h"
-#import "CPTDefinitions.h"
-#import "CPTLineStyle.h"
 #import "CPTPlotArea.h"
 #import "CPTPlotGroup.h"
 
@@ -61,7 +59,7 @@
     if ( (self = [super initWithFrame:newFrame]) ) {
         plotArea = nil;
 
-        CPTPlotArea *newPlotArea = [(CPTPlotArea *)[CPTPlotArea alloc] initWithFrame:newFrame];
+        CPTPlotArea *newPlotArea = [(CPTPlotArea *)[CPTPlotArea alloc] initWithFrame : newFrame];
         self.plotArea = newPlotArea;
         [newPlotArea release];
 

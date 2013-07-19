@@ -1,10 +1,9 @@
 #import "CPTDefinitions.h"
-#import <UIKit/UIKit.h>
 
 @class CPTGraph;
 
 @interface CPTGraphHostingView : UIView {
-    @protected
+    @private
     CPTGraph *hostedGraph;
     BOOL collapsesLayers;
     BOOL allowPinchScaling;

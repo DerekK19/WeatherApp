@@ -6,10 +6,11 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#define LOW_LEVEL_DEBUG FALSE
+#define LOW_LEVEL_DEBUG TRUE
 
 #import "DGK_WeatherViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface DGK_WeatherViewController ()
 
@@ -338,7 +339,7 @@
     NSURL *url;
     NSURLRequest *request;
 
-    url = [NSURL URLWithString:@"http://xyzzy.gordonknight.co.uk:8040/weather/current.json"];
+    url = [NSURL URLWithString:@"http://xyzzy.gordonknight.co.uk:8080/weather/current.json"];
     request = [NSURLRequest requestWithURL:url];
     
     operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
@@ -413,11 +414,14 @@
                      }
                      lastAngle=angle;
                      _reading.text = display;
+                     [SVProgressHUD dismiss];
                  }
                                                                 failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON)
                  {
                      DEBUGLog(@"%@", error);
+                     [SVProgressHUD dismiss];
                  }];
+    [SVProgressHUD showWithStatus:@"Loading..."];
     [operation start];
 }
 
@@ -557,11 +561,15 @@
                      if (sensor == 1) graphData1 = [[NSMutableArray alloc]initWithArray:graphData];
                      if (sensor == 2) graphData2 = [[NSMutableArray alloc]initWithArray:graphData];
                      if (drawGraph) [graph reloadData];
+                     [SVProgressHUD dismiss];
                  }
                                                                 failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON)
                  {
                      DEBUGLog(@"%@", error);
+                     [SVProgressHUD dismiss];
                  }];
+    [SVProgressHUD showWithStatus:@"Loading..."];
     [operation start];
 }
+
 @end

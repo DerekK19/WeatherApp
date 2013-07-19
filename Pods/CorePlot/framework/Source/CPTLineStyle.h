@@ -1,6 +1,3 @@
-#import <Foundation/Foundation.h>
-#import <QuartzCore/QuartzCore.h>
-
 @class CPTColor;
 @class CPTFill;
 
@@ -26,6 +23,7 @@
 @property (nonatomic, readonly, assign) CGFloat patternPhase;
 @property (nonatomic, readonly, retain) CPTColor *lineColor;
 @property (nonatomic, readonly, retain) CPTFill *lineFill;
+@property (nonatomic, readonly, getter = isOpaque) BOOL opaque;
 
 /// @name Factory Methods
 /// @{
