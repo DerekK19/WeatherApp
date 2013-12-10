@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00a2a371fe4a8cf917d8dc2b /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 657FA64D152D720100AD7E75 /* InfoPlist.strings */; };
+		03cfaece2f294dd1f8305016 /* DGK_WeatherViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 657FA659152D720100AD7E75 /* DGK_WeatherViewController~iphone.xib */; };
+		0da673ca0c75a21de8d13b71 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C5253816E5B464000CFC1C /* SystemConfiguration.framework */; };
+		17d893650c126c6574058240 /* wood-grain@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65837165152ED87C00038587 /* wood-grain@2x.png */; };
+		19b58c7eb5a1e2bb2d58f710 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6568B09016E2BA5700C1B6F0 /* Default-568h@2x.png */; };
+		352d90ba7eaf604cafe3e734 /* calabash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17ee0b54d343833dbc319ae0 /* calabash.framework */; };
+		41910f87bdcec472bbc37cd7 /* label-holder.png in Resources */ = {isa = PBXBuildFile; fileRef = 65AF6A8D153154B500D79E7C /* label-holder.png */; };
+		4a901097036ef5105678d7b4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B45EE1DF274C6784F0CA1B /* libPods.a */; };
+		53400f9be797e61b4e525918 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65837163152EB8DC00038587 /* QuartzCore.framework */; };
+		54f4c5e90dfe480564390aa3 /* gauge-needle.png in Resources */ = {isa = PBXBuildFile; fileRef = 65837161152EB47400038587 /* gauge-needle.png */; };
 		650B13981706ACD70053D00C /* Weather.plist in Resources */ = {isa = PBXBuildFile; fileRef = 650B13971706ACD70053D00C /* Weather.plist */; };
 		6568B09116E2BA5700C1B6F0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6568B09016E2BA5700C1B6F0 /* Default-568h@2x.png */; };
 		657FA645152D720100AD7E75 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657FA644152D720100AD7E75 /* UIKit.framework */; };
@@ -16,7 +26,7 @@
 		657FA651152D720100AD7E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 657FA650152D720100AD7E75 /* main.m */; };
 		657FA655152D720100AD7E75 /* DGK_WeatherAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 657FA654152D720100AD7E75 /* DGK_WeatherAppDelegate.m */; };
 		657FA658152D720100AD7E75 /* DGK_WeatherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 657FA657152D720100AD7E75 /* DGK_WeatherViewController.m */; };
-		657FA65B152D720100AD7E75 /* DGK_WeatherViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 657FA659152D720100AD7E75 /* DGK_WeatherViewController.xib */; };
+		657FA65B152D720100AD7E75 /* DGK_WeatherViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 657FA659152D720100AD7E75 /* DGK_WeatherViewController~iphone.xib */; };
 		65837162152EB47400038587 /* gauge-needle.png in Resources */ = {isa = PBXBuildFile; fileRef = 65837161152EB47400038587 /* gauge-needle.png */; };
 		65837164152EB8DD00038587 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65837163152EB8DC00038587 /* QuartzCore.framework */; };
 		65837166152ED87C00038587 /* wood-grain@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65837165152ED87C00038587 /* wood-grain@2x.png */; };
@@ -28,10 +38,24 @@
 		65B8490F16E7083300F6202E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B8490E16E7083300F6202E /* CFNetwork.framework */; };
 		65C5253716E5B458000CFC1C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C5253616E5B458000CFC1C /* MobileCoreServices.framework */; };
 		65C5253916E5B464000CFC1C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C5253816E5B464000CFC1C /* SystemConfiguration.framework */; };
+		70c5a8d6796a6f9043b74d62 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B8490E16E7083300F6202E /* CFNetwork.framework */; };
+		76c21760a93dc636b54a3d6d /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657FA646152D720100AD7E75 /* Foundation.framework */; };
+		7bc2bf34c90474a31b2ae0e9 /* DGK_WeatherAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 657FA654152D720100AD7E75 /* DGK_WeatherAppDelegate.m */; };
+		883280053de4a4ba3d139b01 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657FA648152D720100AD7E75 /* CoreGraphics.framework */; };
+		8c2748687da4598e764d67fb /* gauge-background-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 65AF6A8F1532697300D79E7C /* gauge-background-1.png */; };
 		C976926C8938429EBD146CB9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B45EE1DF274C6784F0CA1B /* libPods.a */; };
+		b3fea473b6901d8cb79b49a0 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 65AF6A8B15314E1500D79E7C /* icon.png */; };
+		b9b2c68a0c47f682376419f9 /* gauge-background-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 65AF6A901532697300D79E7C /* gauge-background-2.png */; };
+		b9b3e37936b95b39720983f7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657FA644152D720100AD7E75 /* UIKit.framework */; };
+		b9c459a4ba190740ed08d58c /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C5253616E5B458000CFC1C /* MobileCoreServices.framework */; };
+		bad85fb13bf8b813ecc8018b /* Weather.plist in Resources */ = {isa = PBXBuildFile; fileRef = 650B13971706ACD70053D00C /* Weather.plist */; };
+		bc6466f7c403171ce97929c2 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65AF6A8915314DA100D79E7C /* icon@2x.png */; };
+		c9f272a9b8a3097f1309e49a /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 657FA650152D720100AD7E75 /* main.m */; };
+		d1ab2c1fb7c9736ca32bf29b /* DGK_WeatherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 657FA657152D720100AD7E75 /* DGK_WeatherViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		17ee0b54d343833dbc319ae0 /* calabash.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; path = calabash.framework; sourceTree = "<group>"; };
 		21B45EE1DF274C6784F0CA1B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		650B13971706ACD70053D00C /* Weather.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Weather.plist; sourceTree = "<group>"; };
 		6568B09016E2BA5700C1B6F0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -47,7 +71,7 @@
 		657FA654152D720100AD7E75 /* DGK_WeatherAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DGK_WeatherAppDelegate.m; sourceTree = "<group>"; };
 		657FA656152D720100AD7E75 /* DGK_WeatherViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DGK_WeatherViewController.h; sourceTree = "<group>"; };
 		657FA657152D720100AD7E75 /* DGK_WeatherViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DGK_WeatherViewController.m; sourceTree = "<group>"; };
-		657FA65A152D720100AD7E75 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DGK_WeatherViewController.xib; sourceTree = "<group>"; };
+		657FA65A152D720100AD7E75 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/DGK_WeatherViewController~iphone.xib"; sourceTree = "<group>"; };
 		65837161152EB47400038587 /* gauge-needle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gauge-needle.png"; path = "images/gauge-needle.png"; sourceTree = "<group>"; };
 		65837163152EB8DC00038587 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		65837165152ED87C00038587 /* wood-grain@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wood-grain@2x.png"; path = "images/wood-grain@2x.png"; sourceTree = "<group>"; };
@@ -58,6 +82,7 @@
 		65AF6A8F1532697300D79E7C /* gauge-background-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gauge-background-1.png"; path = "images/gauge-background-1.png"; sourceTree = "<group>"; };
 		65AF6A901532697300D79E7C /* gauge-background-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gauge-background-2.png"; path = "images/gauge-background-2.png"; sourceTree = "<group>"; };
 		65B8490E16E7083300F6202E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		65B948EF1856D1E50094BD5E /* Weather-cal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather-cal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65C5253416E5B0FE000CFC1C /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		65C5253616E5B458000CFC1C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		65C5253816E5B464000CFC1C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -65,6 +90,22 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2e45b3afe18cd04623011e8a /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				70c5a8d6796a6f9043b74d62 /* CFNetwork.framework in Frameworks */,
+				0da673ca0c75a21de8d13b71 /* SystemConfiguration.framework in Frameworks */,
+				b9c459a4ba190740ed08d58c /* MobileCoreServices.framework in Frameworks */,
+				53400f9be797e61b4e525918 /* QuartzCore.framework in Frameworks */,
+				b9b3e37936b95b39720983f7 /* UIKit.framework in Frameworks */,
+				76c21760a93dc636b54a3d6d /* Foundation.framework in Frameworks */,
+				883280053de4a4ba3d139b01 /* CoreGraphics.framework in Frameworks */,
+				4a901097036ef5105678d7b4 /* libPods.a in Frameworks */,
+				352d90ba7eaf604cafe3e734 /* calabash.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		657FA63D152D720100AD7E75 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -100,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				657FA640152D720100AD7E75 /* Weather.app */,
+				65B948EF1856D1E50094BD5E /* Weather-cal.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -115,6 +157,7 @@
 				657FA648152D720100AD7E75 /* CoreGraphics.framework */,
 				65C5253616E5B458000CFC1C /* MobileCoreServices.framework */,
 				65C5253816E5B464000CFC1C /* SystemConfiguration.framework */,
+				17ee0b54d343833dbc319ae0 /* calabash.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -127,7 +170,7 @@
 				657FA654152D720100AD7E75 /* DGK_WeatherAppDelegate.m */,
 				657FA656152D720100AD7E75 /* DGK_WeatherViewController.h */,
 				657FA657152D720100AD7E75 /* DGK_WeatherViewController.m */,
-				657FA659152D720100AD7E75 /* DGK_WeatherViewController.xib */,
+				657FA659152D720100AD7E75 /* DGK_WeatherViewController~iphone.xib */,
 				657FA64B152D720100AD7E75 /* Supporting Files */,
 			);
 			path = Weather;
@@ -180,6 +223,24 @@
 			productReference = 657FA640152D720100AD7E75 /* Weather.app */;
 			productType = "com.apple.product-type.application";
 		};
+		d28b8ed5b27719d4880473f9 /* Weather-cal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = dca24cd9305d29f672cf28b0 /* Build configuration list for PBXNativeTarget "Weather-cal" */;
+			buildPhases = (
+				dc7ee571ab48cfd2a3c550fa /* Sources */,
+				2e45b3afe18cd04623011e8a /* Frameworks */,
+				842bade5b43ff0eda4774d47 /* Resources */,
+				846b9f6f3f1efbbea5ca087b /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Weather-cal";
+			productName = "Weather-cal";
+			productReference = 65B948EF1856D1E50094BD5E /* Weather-cal.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -187,7 +248,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = DGK.Weather;
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = 657FA63A152D720000AD7E75 /* Build configuration list for PBXProject "Weather" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -202,6 +263,7 @@
 			projectRoot = "";
 			targets = (
 				657FA63F152D720100AD7E75 /* Weather */,
+				d28b8ed5b27719d4880473f9 /* Weather-cal */,
 			);
 		};
 /* End PBXProject section */
@@ -212,7 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				657FA64F152D720100AD7E75 /* InfoPlist.strings in Resources */,
-				657FA65B152D720100AD7E75 /* DGK_WeatherViewController.xib in Resources */,
+				657FA65B152D720100AD7E75 /* DGK_WeatherViewController~iphone.xib in Resources */,
 				65837162152EB47400038587 /* gauge-needle.png in Resources */,
 				65837166152ED87C00038587 /* wood-grain@2x.png in Resources */,
 				65AF6A8A15314DA100D79E7C /* icon@2x.png in Resources */,
@@ -225,9 +287,41 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		842bade5b43ff0eda4774d47 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00a2a371fe4a8cf917d8dc2b /* InfoPlist.strings in Resources */,
+				03cfaece2f294dd1f8305016 /* DGK_WeatherViewController~iphone.xib in Resources */,
+				54f4c5e90dfe480564390aa3 /* gauge-needle.png in Resources */,
+				17d893650c126c6574058240 /* wood-grain@2x.png in Resources */,
+				bc6466f7c403171ce97929c2 /* icon@2x.png in Resources */,
+				b3fea473b6901d8cb79b49a0 /* icon.png in Resources */,
+				41910f87bdcec472bbc37cd7 /* label-holder.png in Resources */,
+				8c2748687da4598e764d67fb /* gauge-background-1.png in Resources */,
+				b9b2c68a0c47f682376419f9 /* gauge-background-2.png in Resources */,
+				19b58c7eb5a1e2bb2d58f710 /* Default-568h@2x.png in Resources */,
+				bad85fb13bf8b813ecc8018b /* Weather.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		846b9f6f3f1efbbea5ca087b /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
 		E054BD52A61E404BB1B67391 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -255,6 +349,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		dc7ee571ab48cfd2a3c550fa /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				c9f272a9b8a3097f1309e49a /* main.m in Sources */,
+				7bc2bf34c90474a31b2ae0e9 /* DGK_WeatherAppDelegate.m in Sources */,
+				d1ab2c1fb7c9736ca32bf29b /* DGK_WeatherViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -266,24 +370,53 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		657FA659152D720100AD7E75 /* DGK_WeatherViewController.xib */ = {
+		657FA659152D720100AD7E75 /* DGK_WeatherViewController~iphone.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				657FA65A152D720100AD7E75 /* en */,
 			);
-			name = DGK_WeatherViewController.xib;
+			name = "DGK_WeatherViewController~iphone.xib";
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		16dbabe2360d4075af89e8ff /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ADADC52271B44D6A8D52BB68 /* Pods.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Weather/Weather-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = "Weather/Weather-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"$(inherited)",
+					"-force_load",
+					"\"$(SRCROOT)/calabash.framework/calabash\"",
+					"-lstdc++",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		657FA65C152D720100AD7E75 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -298,10 +431,14 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -310,9 +447,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -320,8 +458,11 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
@@ -370,6 +511,34 @@
 			};
 			name = Release;
 		};
+		6f35832e12905eb093a821e7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ADADC52271B44D6A8D52BB68 /* Pods.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Weather/Weather-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = "Weather/Weather-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"$(inherited)",
+					"-force_load",
+					"\"$(SRCROOT)/calabash.framework/calabash\"",
+					"-lstdc++",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -387,6 +556,15 @@
 			buildConfigurations = (
 				657FA65F152D720100AD7E75 /* Debug */,
 				657FA660152D720100AD7E75 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		dca24cd9305d29f672cf28b0 /* Build configuration list for PBXNativeTarget "Weather-cal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6f35832e12905eb093a821e7 /* Debug */,
+				16dbabe2360d4075af89e8ff /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

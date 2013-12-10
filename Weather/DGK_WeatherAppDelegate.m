@@ -11,12 +11,13 @@
 
 @implementation DGK_WeatherAppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+- (BOOL)application:(UIApplication *)application
+didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.viewController = [[DGK_WeatherViewController alloc] initWithNibName:@"DGK_WeatherViewController" bundle:nil];
-    self.window.rootViewController = self.viewController;
+    [self.window setRootViewController:self.viewController];
     [self.window makeKeyAndVisible];
     DEBUGLog(@"");
     return YES;

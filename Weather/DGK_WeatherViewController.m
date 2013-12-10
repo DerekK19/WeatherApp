@@ -25,12 +25,12 @@
     mode = MODE_TEMPERATURE;
     when = [NSDate date];
     
-    self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"wood-grain"]];
+    _contentView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"wood-grain"]];
     
     UIImage *needleImage = [UIImage imageNamed:@"gauge-needle.png"];
     arrowImageView = [[UIImageView alloc] initWithImage:needleImage];
     [arrowImageView setFrame:CGRectMake(148, 92, 20, 120)];
-    [self.view addSubview:arrowImageView];
+    [_contentView addSubview:arrowImageView];
     
     arrowImageView.layer.anchorPoint = CGPointMake(0.5, 0.13);
     arrowImageView.opaque = YES;

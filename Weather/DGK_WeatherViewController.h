@@ -31,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *ImageVerticalSpaceConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *ImageHorizontalSpaceConstraint;
 
+@property (nonatomic, retain) IBOutlet UIView *contentView;
 @property (nonatomic, retain) IBOutlet UISegmentedControl *viewChanger;
 @property (nonatomic, retain) IBOutlet UIView *gaugeView;
 @property (nonatomic, retain) IBOutlet CPTGraphHostingView *graphView;
