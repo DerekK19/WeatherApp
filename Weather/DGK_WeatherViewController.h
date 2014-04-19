@@ -38,6 +38,8 @@
 @property (nonatomic, retain) IBOutlet UIImageView *gauge;
 @property (nonatomic, retain) IBOutlet UILabel *reading;
 @property (nonatomic, retain) IBOutlet UILabel *label;
+@property (weak, nonatomic) IBOutlet UILabel *legend1Label;
+@property (weak, nonatomic) IBOutlet UILabel *legend2Label;
 
 - (IBAction)willRefresh:(id)sender;
 - (IBAction)willToggle:(id)sender;

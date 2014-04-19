@@ -166,6 +166,11 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
  **/
 @synthesize needsRelabel;
 
+/** @property BOOL adjustLabelAnchors
+ *  @brief If @YES, data labels anchor points are adjusted automatically when the labels are positioned. If @NO, data labels anchor points do not change.
+ **/
+@synthesize adjustLabelAnchors;
+
 /** @property BOOL showLabels
  *  @brief Set to @NO to override all other label settings and hide the data labels. Defaults to @YES.
  **/
@@ -218,6 +223,11 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
  **/
 @synthesize alignsPointsToPixels;
 
+/** @property BOOL drawLegendSwatchDecoration
+ *  @brief If @YES (the default), additional plot-specific decorations, symbols, and/or colors will be drawn on top of the legend swatch rectangle.
+ **/
+@synthesize drawLegendSwatchDecoration;
+
 #pragma mark -
 #pragma mark Init/Dealloc
 
@@ -249,6 +259,7 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
  *  - @ref plotSpace = @nil
  *  - @ref dataNeedsReloading = @NO
  *  - @ref needsRelabel = @YES
+ *  - @ref adjustLabelAnchors = @YES
  *  - @ref showLabels = @YES
  *  - @ref labelOffset = @num{0.0}
  *  - @ref labelRotation = @num{0.0}
@@ -257,6 +268,7 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
  *  - @ref labelFormatter = @nil
  *  - @ref labelShadow = @nil
  *  - @ref alignsPointsToPixels = @YES
+ *  - @ref drawLegendSwatchDecoration = @YES
  *  - @ref masksToBounds = @YES
  *  - @ref needsDisplayOnBoundsChange = @YES
  *
@@ -275,6 +287,7 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
         plotSpace            = nil;
         dataNeedsReloading   = NO;
         needsRelabel         = YES;
+        adjustLabelAnchors   = YES;
         showLabels           = YES;
         labelOffset          = CPTFloat(0.0);
         labelRotation        = CPTFloat(0.0);
@@ -285,6 +298,8 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
         labelIndexRange      = NSMakeRange(0, 0);
         labelAnnotations     = nil;
         alignsPointsToPixels = YES;
+
+        drawLegendSwatchDecoration = YES;
 
         self.masksToBounds              = YES;
         self.needsDisplayOnBoundsChange = YES;
@@ -310,6 +325,7 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
         plotSpace            = [theLayer->plotSpace retain];
         dataNeedsReloading   = theLayer->dataNeedsReloading;
         needsRelabel         = theLayer->needsRelabel;
+        adjustLabelAnchors   = theLayer->adjustLabelAnchors;
         showLabels           = theLayer->showLabels;
         labelOffset          = theLayer->labelOffset;
         labelRotation        = theLayer->labelRotation;
@@ -320,6 +336,8 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
         labelIndexRange      = theLayer->labelIndexRange;
         labelAnnotations     = [theLayer->labelAnnotations retain];
         alignsPointsToPixels = theLayer->alignsPointsToPixels;
+
+        drawLegendSwatchDecoration = theLayer->drawLegendSwatchDecoration;
     }
     return self;
 }
@@ -357,6 +375,7 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
     [coder encodeObject:self.plotSpace forKey:@"CPTPlot.plotSpace"];
     [coder encodeInt:self.cachePrecision forKey:@"CPTPlot.cachePrecision"];
     [coder encodeBool:self.needsRelabel forKey:@"CPTPlot.needsRelabel"];
+    [coder encodeBool:self.adjustLabelAnchors forKey:@"CPTPlot.adjustLabelAnchors"];
     [coder encodeBool:self.showLabels forKey:@"CPTPlot.showLabels"];
     [coder encodeCGFloat:self.labelOffset forKey:@"CPTPlot.labelOffset"];
     [coder encodeCGFloat:self.labelRotation forKey:@"CPTPlot.labelRotation"];
@@ -367,6 +386,7 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
     [coder encodeObject:[NSValue valueWithRange:self.labelIndexRange] forKey:@"CPTPlot.labelIndexRange"];
     [coder encodeObject:self.labelAnnotations forKey:@"CPTPlot.labelAnnotations"];
     [coder encodeBool:self.alignsPointsToPixels forKey:@"CPTPlot.alignsPointsToPixels"];
+    [coder encodeBool:self.drawLegendSwatchDecoration forKey:@"CPTPlot.drawLegendSwatchDecoration"];
 
     // No need to archive these properties:
     // dataNeedsReloading
@@ -383,6 +403,7 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
         plotSpace            = [[coder decodeObjectForKey:@"CPTPlot.plotSpace"] retain];
         cachePrecision       = (CPTPlotCachePrecision)[coder decodeIntForKey : @"CPTPlot.cachePrecision"];
         needsRelabel         = [coder decodeBoolForKey:@"CPTPlot.needsRelabel"];
+        adjustLabelAnchors   = [coder decodeBoolForKey:@"CPTPlot.adjustLabelAnchors"];
         showLabels           = [coder decodeBoolForKey:@"CPTPlot.showLabels"];
         labelOffset          = [coder decodeCGFloatForKey:@"CPTPlot.labelOffset"];
         labelRotation        = [coder decodeCGFloatForKey:@"CPTPlot.labelRotation"];
@@ -393,6 +414,8 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
         labelIndexRange      = [[coder decodeObjectForKey:@"CPTPlot.labelIndexRange"] rangeValue];
         labelAnnotations     = [[coder decodeObjectForKey:@"CPTPlot.labelAnnotations"] mutableCopy];
         alignsPointsToPixels = [coder decodeBoolForKey:@"CPTPlot.alignsPointsToPixels"];
+
+        drawLegendSwatchDecoration = [coder decodeBoolForKey:@"CPTPlot.drawLegendSwatchDecoration"];
 
         // support old archives
         if ( [coder containsValueForKey:@"CPTPlot.identifier"] ) {
@@ -584,7 +607,7 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
     }
 
     self.cachedDataCount += numberOfRecords;
-    [self reloadDataInIndexRange:NSMakeRange(idx, self.cachedDataCount - idx)];
+    [self reloadDataInIndexRange:NSMakeRange(idx, numberOfRecords)];
 }
 
 /** @brief Delete records in the given index range from the plot data cache.
@@ -1370,6 +1393,10 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
         return;
     }
 
+    NSDictionary *textAttributes = [dataLabelTextStyle attributes];
+    BOOL hasAttributedFormatter  = ([dataLabelFormatter attributedStringForObjectValue:[NSDecimalNumber zero]
+                                                                 withDefaultAttributes:textAttributes] != nil);
+
     NSUInteger sampleCount = self.cachedDataCount;
     NSRange indexRange     = self.labelIndexRange;
     NSUInteger maxIndex    = NSMaxRange(indexRange);
@@ -1398,8 +1425,14 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
             newLabelLayer = [[self cachedValueForKey:CPTPlotBindingDataLabels recordIndex:i] retain];
 
             if ( ( (newLabelLayer == nil) || (newLabelLayer == nilObject) ) && plotProvidesLabels ) {
-                NSString *labelString = [dataLabelFormatter stringForObjectValue:dataValue];
-                newLabelLayer = [[CPTTextLayer alloc] initWithText:labelString style:dataLabelTextStyle];
+                if ( hasAttributedFormatter ) {
+                    NSAttributedString *labelString = [dataLabelFormatter attributedStringForObjectValue:dataValue withDefaultAttributes:textAttributes];
+                    newLabelLayer = [[CPTTextLayer alloc] initWithAttributedText:labelString];
+                }
+                else {
+                    NSString *labelString = [dataLabelFormatter stringForObjectValue:dataValue];
+                    newLabelLayer = [[CPTTextLayer alloc] initWithText:labelString style:dataLabelTextStyle];
+                }
             }
 
             if ( [newLabelLayer isKindOfClass:nullClass] || (newLabelLayer == nilObject) ) {
@@ -1473,7 +1506,7 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
 
 -(void)updateContentAnchorForLabel:(CPTPlotSpaceAnnotation *)label
 {
-    if ( label ) {
+    if ( label && self.adjustLabelAnchors ) {
         CGPoint displacement = label.displacement;
         if ( CGPointEqualToPoint(displacement, CGPointZero) ) {
             displacement.y = CPTFloat(1.0); // put the label above the data point if zero displacement
@@ -1484,11 +1517,11 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
 
         if ( ABS(newAnchorX) <= ABS(newAnchorY) ) {
             newAnchorX /= ABS(newAnchorY);
-            newAnchorY  = signbit(newAnchorY) ? -CPTFloat(1.0) : CPTFloat(1.0);
+            newAnchorY  = signbit(newAnchorY) ? CPTFloat(-1.0) : CPTFloat(1.0);
         }
         else {
             newAnchorY /= ABS(newAnchorX);
-            newAnchorX  = signbit(newAnchorX) ? -CPTFloat(1.0) : CPTFloat(1.0);
+            newAnchorX  = signbit(newAnchorX) ? CPTFloat(-1.0) : CPTFloat(1.0);
         }
 
         label.contentAnchorPoint = CPTPointMake( ( newAnchorX + CPTFloat(1.0) ) / CPTFloat(2.0), ( newAnchorY + CPTFloat(1.0) ) / CPTFloat(2.0) );
@@ -1573,8 +1606,23 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
  **/
 -(void)drawSwatchForLegend:(CPTLegend *)legend atIndex:(NSUInteger)idx inRect:(CGRect)rect inContext:(CGContextRef)context
 {
-    CPTFill *theFill           = legend.swatchFill;
-    CPTLineStyle *theLineStyle = legend.swatchBorderLineStyle;
+    id<CPTLegendDelegate> theDelegate = (id<CPTLegendDelegate>)self.delegate;
+
+    CPTFill *theFill = nil;
+    if ( [theDelegate respondsToSelector:@selector(legend:fillForSwatchAtIndex:forPlot:)] ) {
+        theFill = [theDelegate legend:legend fillForSwatchAtIndex:idx forPlot:self];
+    }
+    if ( !theFill ) {
+        theFill = legend.swatchFill;
+    }
+
+    CPTLineStyle *theLineStyle = nil;
+    if ( [theDelegate respondsToSelector:@selector(legend:lineStyleForSwatchAtIndex:forPlot:)] ) {
+        theLineStyle = [theDelegate legend:legend lineStyleForSwatchAtIndex:idx forPlot:self];
+    }
+    if ( !theLineStyle ) {
+        theLineStyle = legend.swatchBorderLineStyle;
+    }
 
     if ( theFill || theLineStyle ) {
         CGFloat radius = legend.swatchCornerRadius;
@@ -1588,7 +1636,7 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
         if ( theLineStyle ) {
             [theLineStyle setLineStyleInContext:context];
             CGContextBeginPath(context);
-            AddRoundedRectPath(context, CPTAlignRectToUserSpace(context, rect), radius);
+            AddRoundedRectPath(context, CPTAlignBorderedRectToUserSpace(context, rect, theLineStyle), radius);
             [theLineStyle strokePathInContext:context];
         }
     }

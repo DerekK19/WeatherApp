@@ -2,6 +2,8 @@
 
 /// @file
 
+@class CPTLineStyle;
+
 #if __cplusplus
 extern "C" {
 #endif
@@ -102,12 +104,25 @@ CPTRGBAColor CPTRGBAColorFromCGColor(CGColorRef color);
 
 /// @name Quartz Pixel-Alignment Functions
 /// @{
+
+/**
+ *  @brief A function called to align a point in a CGContext.
+ **/
+typedef CGPoint (*CPTAlignPointFunction)(CGContextRef, CGPoint);
+
+/**
+ *  @brief A function called to align a rectangle in a CGContext.
+ **/
+typedef CGRect (*CPTAlignRectFunction)(CGContextRef, CGRect);
+
 CGPoint CPTAlignPointToUserSpace(CGContextRef context, CGPoint point);
 CGSize CPTAlignSizeToUserSpace(CGContextRef context, CGSize size);
 CGRect CPTAlignRectToUserSpace(CGContextRef context, CGRect rect);
 
 CGPoint CPTAlignIntegralPointToUserSpace(CGContextRef context, CGPoint point);
 CGRect CPTAlignIntegralRectToUserSpace(CGContextRef context, CGRect rect);
+
+CGRect CPTAlignBorderedRectToUserSpace(CGContextRef context, CGRect rect, CPTLineStyle *borderLineStyle);
 
 /// @}
 

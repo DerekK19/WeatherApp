@@ -37,8 +37,8 @@ NSString *const CPTTradingRangePlotBindingLineStyles         = @"lineStyles";   
 NSString *const CPTTradingRangePlotBindingIncreaseLineStyles = @"increaseLineStyles"; ///< Line styles used to outline candlestick symbols when close >= open.
 NSString *const CPTTradingRangePlotBindingDecreaseLineStyles = @"decreaseLineStyles"; ///< Line styles used to outline candlestick symbols when close < open.
 
-const CPTCoordinate independentCoord = CPTCoordinateX;
-const CPTCoordinate dependentCoord   = CPTCoordinateY;
+static const CPTCoordinate independentCoord = CPTCoordinateX;
+static const CPTCoordinate dependentCoord   = CPTCoordinateY;
 
 /// @cond
 @interface CPTTradingRangePlot()
@@ -499,7 +499,7 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
                 openPoint = CPTPointMake(NAN, NAN);
             }
             else {
-                openPoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint];
+                openPoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint numberOfCoordinates:2];
             }
 
             // high point
@@ -508,7 +508,7 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
                 highPoint = CPTPointMake(NAN, NAN);
             }
             else {
-                highPoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint];
+                highPoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint numberOfCoordinates:2];
             }
 
             // low point
@@ -517,7 +517,7 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
                 lowPoint = CPTPointMake(NAN, NAN);
             }
             else {
-                lowPoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint];
+                lowPoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint numberOfCoordinates:2];
             }
 
             // close point
@@ -526,7 +526,7 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
                 closePoint = CPTPointMake(NAN, NAN);
             }
             else {
-                closePoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint];
+                closePoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint numberOfCoordinates:2];
             }
 
             CGFloat xCoord = openPoint.x;
@@ -596,7 +596,7 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
                 openPoint = CPTPointMake(NAN, NAN);
             }
             else {
-                openPoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint];
+                openPoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint numberOfCoordinates:2];
             }
 
             // high point
@@ -605,7 +605,7 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
                 highPoint = CPTPointMake(NAN, NAN);
             }
             else {
-                highPoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint];
+                highPoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint numberOfCoordinates:2];
             }
 
             // low point
@@ -614,7 +614,7 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
                 lowPoint = CPTPointMake(NAN, NAN);
             }
             else {
-                lowPoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint];
+                lowPoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint numberOfCoordinates:2];
             }
 
             // close point
@@ -623,7 +623,7 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
                 closePoint = CPTPointMake(NAN, NAN);
             }
             else {
-                closePoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint];
+                closePoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint numberOfCoordinates:2];
             }
 
             CGFloat xCoord = openPoint.x;
@@ -897,33 +897,36 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
 -(void)drawSwatchForLegend:(CPTLegend *)legend atIndex:(NSUInteger)idx inRect:(CGRect)rect inContext:(CGContextRef)context
 {
     [super drawSwatchForLegend:legend atIndex:idx inRect:rect inContext:context];
-    [self.lineStyle setLineStyleInContext:context];
 
-    switch ( self.plotStyle ) {
-        case CPTTradingRangePlotStyleOHLC:
-            [self drawOHLCInContext:context
-                            atIndex:idx
-                                  x:CGRectGetMidX(rect)
-                               open:CGRectGetMinY(rect) + rect.size.height / CPTFloat(3.0)
-                              close:CGRectGetMinY(rect) + rect.size.height * (CGFloat)(2.0 / 3.0)
-                               high:CGRectGetMaxY(rect)
-                                low:CGRectGetMinY(rect)
-                        alignPoints:YES];
-            break;
+    if ( self.drawLegendSwatchDecoration ) {
+        [self.lineStyle setLineStyleInContext:context];
 
-        case CPTTradingRangePlotStyleCandleStick:
-            [self drawCandleStickInContext:context
-                                   atIndex:idx
-                                         x:CGRectGetMidX(rect)
-                                      open:CGRectGetMinY(rect) + rect.size.height / CPTFloat(3.0)
-                                     close:CGRectGetMinY(rect) + rect.size.height * (CGFloat)(2.0 / 3.0)
-                                      high:CGRectGetMaxY(rect)
-                                       low:CGRectGetMinY(rect)
-                               alignPoints:YES];
-            break;
+        switch ( self.plotStyle ) {
+            case CPTTradingRangePlotStyleOHLC:
+                [self drawOHLCInContext:context
+                                atIndex:idx
+                                      x:CGRectGetMidX(rect)
+                                   open:CGRectGetMinY(rect) + rect.size.height / CPTFloat(3.0)
+                                  close:CGRectGetMinY(rect) + rect.size.height * (CGFloat)(2.0 / 3.0)
+                                   high:CGRectGetMaxY(rect)
+                                    low:CGRectGetMinY(rect)
+                            alignPoints:YES];
+                break;
 
-        default:
-            break;
+            case CPTTradingRangePlotStyleCandleStick:
+                [self drawCandleStickInContext:context
+                                       atIndex:idx
+                                             x:CGRectGetMidX(rect)
+                                          open:CGRectGetMinY(rect) + rect.size.height / CPTFloat(3.0)
+                                         close:CGRectGetMinY(rect) + rect.size.height * (CGFloat)(2.0 / 3.0)
+                                          high:CGRectGetMaxY(rect)
+                                           low:CGRectGetMinY(rect)
+                                   alignPoints:YES];
+                break;
+
+            default:
+                break;
+        }
     }
 }
 
@@ -1129,7 +1132,10 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
     CPTPlotRange *yRange         = thePlotSpace.yRange;
 
     CGPoint openPoint, highPoint, lowPoint, closePoint;
-    CGFloat lastViewX, lastViewMin, lastViewMax;
+
+    CGFloat lastViewX   = CPTFloat(0.0);
+    CGFloat lastViewMin = CPTFloat(0.0);
+    CGFloat lastViewMax = CPTFloat(0.0);
 
     NSUInteger result              = NSNotFound;
     CGFloat minimumDistanceSquared = NAN;
@@ -1156,7 +1162,7 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
             // open point
             plotPoint[dependentCoord] = *openBytes++;
             if ( !isnan(plotPoint[dependentCoord]) && [yRange containsDouble:plotPoint[dependentCoord]] ) {
-                openPoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint];
+                openPoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint numberOfCoordinates:2];
                 CGFloat distanceSquared = squareOfDistanceBetweenPoints(point, openPoint);
                 if ( isnan(minimumDistanceSquared) || (distanceSquared < minimumDistanceSquared) ) {
                     minimumDistanceSquared = distanceSquared;
@@ -1170,7 +1176,7 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
             // high point
             plotPoint[dependentCoord] = *highBytes++;
             if ( !isnan(plotPoint[dependentCoord]) && [yRange containsDouble:plotPoint[dependentCoord]] ) {
-                highPoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint];
+                highPoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint numberOfCoordinates:2];
                 CGFloat distanceSquared = squareOfDistanceBetweenPoints(point, highPoint);
                 if ( isnan(minimumDistanceSquared) || (distanceSquared < minimumDistanceSquared) ) {
                     minimumDistanceSquared = distanceSquared;
@@ -1184,7 +1190,7 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
             // low point
             plotPoint[dependentCoord] = *lowBytes++;
             if ( !isnan(plotPoint[dependentCoord]) && [yRange containsDouble:plotPoint[dependentCoord]] ) {
-                lowPoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint];
+                lowPoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint numberOfCoordinates:2];
                 CGFloat distanceSquared = squareOfDistanceBetweenPoints(point, lowPoint);
                 if ( isnan(minimumDistanceSquared) || (distanceSquared < minimumDistanceSquared) ) {
                     minimumDistanceSquared = distanceSquared;
@@ -1198,7 +1204,7 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
             // close point
             plotPoint[dependentCoord] = *closeBytes++;
             if ( !isnan(plotPoint[dependentCoord]) && [yRange containsDouble:plotPoint[dependentCoord]] ) {
-                closePoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint];
+                closePoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint numberOfCoordinates:2];
                 CGFloat distanceSquared = squareOfDistanceBetweenPoints(point, closePoint);
                 if ( isnan(minimumDistanceSquared) || (distanceSquared < minimumDistanceSquared) ) {
                     minimumDistanceSquared = distanceSquared;
@@ -1249,7 +1255,7 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
             // open point
             plotPoint[dependentCoord] = *openBytes++;
             if ( !NSDecimalIsNotANumber(&plotPoint[dependentCoord]) && [yRange contains:plotPoint[dependentCoord]] ) {
-                openPoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint];
+                openPoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint numberOfCoordinates:2];
                 CGFloat distanceSquared = squareOfDistanceBetweenPoints(point, openPoint);
                 if ( isnan(minimumDistanceSquared) || (distanceSquared < minimumDistanceSquared) ) {
                     minimumDistanceSquared = distanceSquared;
@@ -1263,7 +1269,7 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
             // high point
             plotPoint[dependentCoord] = *highBytes++;
             if ( !NSDecimalIsNotANumber(&plotPoint[dependentCoord]) && [yRange contains:plotPoint[dependentCoord]] ) {
-                highPoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint];
+                highPoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint numberOfCoordinates:2];
                 CGFloat distanceSquared = squareOfDistanceBetweenPoints(point, highPoint);
                 if ( isnan(minimumDistanceSquared) || (distanceSquared < minimumDistanceSquared) ) {
                     minimumDistanceSquared = distanceSquared;
@@ -1277,7 +1283,7 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
             // low point
             plotPoint[dependentCoord] = *lowBytes++;
             if ( !NSDecimalIsNotANumber(&plotPoint[dependentCoord]) && [yRange contains:plotPoint[dependentCoord]] ) {
-                lowPoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint];
+                lowPoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint numberOfCoordinates:2];
                 CGFloat distanceSquared = squareOfDistanceBetweenPoints(point, lowPoint);
                 if ( isnan(minimumDistanceSquared) || (distanceSquared < minimumDistanceSquared) ) {
                     minimumDistanceSquared = distanceSquared;
@@ -1291,7 +1297,7 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
             // close point
             plotPoint[dependentCoord] = *closeBytes++;
             if ( !NSDecimalIsNotANumber(&plotPoint[dependentCoord]) && [yRange contains:plotPoint[dependentCoord]] ) {
-                closePoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint];
+                closePoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint numberOfCoordinates:2];
                 CGFloat distanceSquared = squareOfDistanceBetweenPoints(point, closePoint);
                 if ( isnan(minimumDistanceSquared) || (distanceSquared < minimumDistanceSquared) ) {
                     minimumDistanceSquared = distanceSquared;
@@ -1321,7 +1327,7 @@ const CPTCoordinate dependentCoord   = CPTCoordinateY;
     }
 
     if ( result != NSNotFound ) {
-        CGFloat offset;
+        CGFloat offset = CPTFloat(0.0);
 
         switch ( self.plotStyle ) {
             case CPTTradingRangePlotStyleOHLC:

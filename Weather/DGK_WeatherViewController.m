@@ -13,6 +13,10 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 
 @interface DGK_WeatherViewController ()
+{
+    BOOL hasSensor1Data;
+    BOOL hasSensor2Data;
+}
 
 @end
 
@@ -63,7 +67,7 @@
     
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
     
-    axisSet.xAxis.majorIntervalLength = [[NSNumber numberWithInt:4*3] decimalValue];
+    axisSet.xAxis.majorIntervalLength = [@(4*3) decimalValue];
     axisSet.xAxis.minorTicksPerInterval = 4*3;
     axisSet.xAxis.majorTickLineStyle = axisLine;
     axisSet.xAxis.minorTickLineStyle = axisLine;
@@ -73,24 +77,24 @@
     axisSet.xAxis.labelOffset = 3.0f;
     axisSet.xAxis.majorGridLineStyle = gridLine;
     axisSet.xAxis.labelTextStyle = axisText;
-    axisSet.xAxis.labelExclusionRanges = [[NSArray alloc]initWithObjects:[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-40) 
-                                                                                                      length:CPTDecimalFromFloat(40)], nil];
+    axisSet.xAxis.labelExclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-40)
+                                                                        length:CPTDecimalFromFloat(40)]];
     axisSet.xAxis.labelingPolicy = CPTAxisLabelingPolicyNone;
-    axisSet.xAxis.majorTickLocations = [[NSSet alloc]initWithObjects:
-                                        [NSNumber numberWithInt:8*3],
-//                                        [NSNumber numberWithInt:16*3],
-                                        [NSNumber numberWithInt:24*3],
-//                                        [NSNumber numberWithInt:32*3],
-                                        [NSNumber numberWithInt:40*3],
-//                                        [NSNumber numberWithInt:48*3],
-                                        [NSNumber numberWithInt:56*3],
-//                                        [NSNumber numberWithInt:64*3],
-                                        [NSNumber numberWithInt:72*3],
-//                                        [NSNumber numberWithInt:80*3],
-                                        [NSNumber numberWithInt:88*3],
-//                                        [NSNumber numberWithInt:96*3],
-                                        nil];
-    NSArray *xAxisLabels = [NSArray arrayWithObjects:
+    axisSet.xAxis.majorTickLocations = [[NSSet alloc]initWithArray:@[
+                                        @(8*3),
+//                                        @(16*3),
+                                        @(24*3),
+//                                        @(32*3),
+                                        @(40*3),
+//                                        @(48*3),
+                                        @(56*3),
+//                                        @(64*3),
+                                        @(72*3),
+//                                        @(80*3),
+                                        @(88*3),
+//                                        @(96*3),
+                                        ]];
+    NSArray *xAxisLabels = @[
                             @"2am",
 //                            @"4am",
                             @"6am",
@@ -103,20 +107,21 @@
 //                            @"8pm",
                             @"10pm",
 //                            @"12am",
-                            nil];
+                            ];
     NSUInteger labelLocation = 0;
     NSMutableSet *customLabels = [NSMutableSet setWithCapacity:[xAxisLabels count]];
-    for (NSNumber *tickLocation in axisSet.xAxis.majorTickLocations) {
+    for (NSNumber *tickLocation in axisSet.xAxis.majorTickLocations)
+    {
         CPTAxisLabel *newLabel = [[CPTAxisLabel alloc] initWithText:[xAxisLabels objectAtIndex:labelLocation++]
                                                           textStyle:axisSet.xAxis.labelTextStyle];
-        newLabel.tickLocation = [[NSNumber numberWithInt:(labelLocation*2-1)*8*3] decimalValue];
+        newLabel.tickLocation = [@((labelLocation*2-1)*8*3) decimalValue];
         newLabel.offset = axisSet.xAxis.labelOffset + axisSet.xAxis.majorTickLength;
         newLabel.rotation = M_PI_2;
         [customLabels addObject:newLabel];
     }
     axisSet.xAxis.axisLabels = customLabels;
 
-    axisSet.yAxis.majorIntervalLength = [[NSNumber numberWithInt:10] decimalValue];
+    axisSet.yAxis.majorIntervalLength = [@(10) decimalValue];
     axisSet.yAxis.minorTicksPerInterval = 10;
     axisSet.yAxis.majorTickLineStyle = axisLine;
     axisSet.yAxis.minorTickLineStyle = axisLine;
@@ -126,19 +131,20 @@
     axisSet.yAxis.majorTickLength = 7.0f;
     axisSet.yAxis.labelOffset = 3.0f;
     axisSet.yAxis.labelTextStyle = axisText;
-    axisSet.yAxis.alternatingBandFills = [NSArray arrayWithObjects:
-                                          [CPTColor colorWithComponentRed:(16.0/255.0) green:(16.0/255.0) blue:(54.0/255.0) alpha:1.0],
-                                          [CPTColor colorWithComponentRed:(16.0/255.0) green:(16.0/255.0) blue:(108.0/255.0) alpha:1.0], nil];
+    axisSet.yAxis.alternatingBandFills = @[
+                                           [CPTColor colorWithComponentRed:(16.0/255.0) green:(16.0/255.0) blue:(54.0/255.0) alpha:1.0],
+                                           [CPTColor colorWithComponentRed:(16.0/255.0) green:(16.0/255.0) blue:(108.0/255.0) alpha:1.0]
+                                           ];
 
     CPTScatterPlot *sensor1plot = [[CPTScatterPlot alloc] initWithFrame:graph.defaultPlotSpace.accessibilityFrame];
     sensor1plot.interpolation = CPTScatterPlotInterpolationCurved;
-    sensor1plot.identifier = [NSNumber numberWithInt:1];
+    sensor1plot.identifier = @(1);
     sensor1plot.dataLineStyle = plotLine1;
     sensor1plot.dataSource = self;
     [graph addPlot:sensor1plot];
     CPTScatterPlot *sensor2plot = [[CPTScatterPlot alloc] initWithFrame:graph.defaultPlotSpace.accessibilityFrame];
     sensor2plot.interpolation = CPTScatterPlotInterpolationCurved;
-    sensor2plot.identifier = [NSNumber numberWithInt:2];
+    sensor2plot.identifier = @(2);
     sensor2plot.dataLineStyle = plotLine2;
     sensor2plot.dataSource = self;
     [graph addPlot:sensor2plot];
@@ -198,7 +204,7 @@
 {
     if(fieldEnum == CPTScatterPlotFieldX)
     {
-        return [NSNumber numberWithInt:index];
+        return @(index);
     }
     else
     {
@@ -228,7 +234,7 @@
             if ([value floatValue] < -100.f) return nil;
             return value;
         }
-        return nil; //[NSNumber numberWithFloat:0.0];
+        return nil; //@(0.0);
     }
 }
 
@@ -274,12 +280,12 @@
     }
     else
     {
-        [self willCaptureDataForSensor:2
-                       establishLimits:NO
-                         andDrawGraph:NO];
-        [self willCaptureDataForSensor:1
-                       establishLimits:YES
-                         andDrawGraph:YES];
+        _legend1Label.hidden = YES;
+        _legend2Label.hidden = YES;
+        hasSensor1Data = NO;
+        hasSensor2Data = NO;
+        [self willCaptureDataForSensor:2];
+        [self willCaptureDataForSensor:1];
     }
 }
 
@@ -316,6 +322,8 @@
 
 - (IBAction)willChangeView:(id)sender
 {
+    _legend1Label.hidden = YES;
+    _legend2Label.hidden = YES;
     if ([_viewChanger selectedSegmentIndex] == 0)
     {
         // Show gauge
@@ -335,104 +343,37 @@
 
 - (void)willCaptureDataNow
 {
-    AFJSONRequestOperation *operation;
-    NSURL *url;
-    NSURLRequest *request;
+    [SVProgressHUD setBackgroundColor:[UIColor clearColor]];
+    [SVProgressHUD setForegroundColor:[UIColor whiteColor]];
+    [SVProgressHUD setOffsetFromCenter:UIOffsetMake(0.f, 75.f)];
+    [SVProgressHUD showWithStatus:@"Loading"];
 
-    url = [NSURL URLWithString:@"http://xyzzy.gordonknight.co.uk:8080/weather/current.json"];
-    request = [NSURLRequest requestWithURL:url];
+    NSURL *url = [NSURL URLWithString:@"http://xyzzy.gordonknight.co.uk:8080/weather/current.json"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
-    operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
-                                                                success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
                  {
-                     DEBUGLog(@"%@", JSON);
-                     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-                     [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-                     NSNumber *value = nil;
-                     float angle;
-                     NSString *display;
-                     switch(mode)
-                     {
-                         case MODE_TEMPERATURE:
-                             value = [formatter numberFromString:[JSON valueForKey: @"Temperature"]];
-                             angle = ([value floatValue]-10) / 20 * M_PI * 1.74; // Range is 10-30 degrees Centigrade
-                             display = [NSString stringWithFormat:@"%2.1f \u00B0C", [value floatValue]];
-                             break;
-                         case MODE_CALIBRATE:
-                             value = [NSNumber numberWithInt:30];
-                             angle = ([value floatValue]-10) / 20 * M_PI * 1.74;
-                             display = [NSString stringWithFormat:@"%2.1f \u00B0C", [value floatValue]];
-                             break;
-                         case MODE_HUMIDITY:
-                             value = [formatter numberFromString:[JSON valueForKey: @"Humidity"]];
-                             angle = ([value floatValue]-30) / 40 * M_PI * 1.74; // Range is 30-70 % Humidity
-                             display = [NSString stringWithFormat:@"%2.1f %% RH", [value floatValue]];
-                             break;
-                         case MODE_RAIN:
-                             value = [formatter numberFromString:[JSON valueForKey: @"Rainfall"]];
-                             angle = [value floatValue] / 10 * M_PI * 1.74; // Range is 0-10 mm
-                             display = [NSString stringWithFormat:@"%2.1f mm", [value floatValue]];
-                             break;
-                         case MODE_WIND:
-                             value = [formatter numberFromString:[JSON valueForKey: @"Wind"]];
-                             angle = [value floatValue] / 50 * M_PI * 1.74; // Range is 0-50 m/s
-                             display = [NSString stringWithFormat:@"%2.1f m/s", [value floatValue]];
-                             break;
-                     }
-                     if (value == nil) return;
-                     
-                     if (angle < 0) angle = 0;
-                     if (angle > M_PI * 1.74) angle = M_PI * 1.74;
-                     
-                     if (abs (angle-lastAngle) < M_PI)
-                     {
-                         [UIView animateWithDuration:1.0
-                                               delay:0
-                                             options:UIViewAnimationOptionCurveEaseInOut
-                                          animations:^() {
-                                              arrowImageView.transform = CGAffineTransformMakeRotation(angle);
-                                          }
-                                          completion:^(BOOL finished) {}];
-                     }
-                     else // > 180 degreees, so go in two jumps or the needle will move anticlockwise
-                     {
-                         [UIView animateWithDuration:1.5
-                                               delay:0
-                                             options:UIViewAnimationOptionCurveEaseIn
-                                          animations:^() {
-                                              arrowImageView.transform = CGAffineTransformMakeRotation((angle+lastAngle)/2);
-                                          }
-                                          completion:^(BOOL finished) {
-                                              [UIView animateWithDuration:1.5
-                                                                    delay:0
-                                                                  options:UIViewAnimationOptionCurveEaseOut
-                                                               animations:^() {
-                                                                   arrowImageView.transform = CGAffineTransformMakeRotation(angle);
-                                                               }
-                                                               completion:^(BOOL finished) {}];
-                                          }];
-                     }
-                     lastAngle=angle;
-                     _reading.text = display;
-                     [SVProgressHUD dismiss];
+                     [self displayDialWithJSON:JSON];
                  }
-                                                                failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON)
+         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON)
                  {
                      DEBUGLog(@"%@", error);
                      [SVProgressHUD dismiss];
                  }];
-    [SVProgressHUD showWithStatus:@"Loading..."];
     [operation start];
 }
 
 - (void)willCaptureDataForSensor:(NSInteger)sensor
-                 establishLimits:(BOOL)establishLimits
-                   andDrawGraph:(BOOL)drawGraph
 {
-    AFJSONRequestOperation *operation;
-    NSURL *url;
-    NSURLRequest *request;
+    [SVProgressHUD setBackgroundColor:[UIColor clearColor]];
+    [SVProgressHUD setForegroundColor:[UIColor whiteColor]];
+    [SVProgressHUD setOffsetFromCenter:UIOffsetMake(0.f, 40.f)];
+    [SVProgressHUD showWithStatus:@"Loading"];
 
+    if (sensor == 1) hasSensor1Data = YES;
+    if (sensor == 2) hasSensor2Data = YES;
+    
     NSString *source = mode == MODE_TEMPERATURE ? @"temperature" :
                        mode == MODE_HUMIDITY ? @"humidity" :
                        mode == MODE_WIND ? @"wind" :
@@ -444,132 +385,227 @@
     NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     NSString *date =[formatter stringFromDate:when];
-
-    url = [NSURL URLWithString:[NSString stringWithFormat:URL,sensor,date,source]];
-    request = [NSURLRequest requestWithURL:url];
-    operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
-                                                                success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
-                 {
-                     DEBUGLog(@"%@", JSON);
-                     NSMutableArray *graphData = [[NSMutableArray alloc]initWithArray:JSON];
-                     // Initial scaling of data (Wind to MPH etc)
-                     switch(mode)
-                     {
-                         case MODE_WIND:
-                             // X Axis == time, Y Axis = wind speed
-                             for (int i = 0; i < [graphData count]; i++) {
-                                 NSMutableDictionary *mRecord = [[NSMutableDictionary alloc]initWithDictionary:[graphData objectAtIndex:i]];
-                                 Float32 val = [((NSNumber *)[mRecord objectForKey:@"s"])floatValue];
-                                 val *= 2.23693629; // Wind show in MPH
-                                 [mRecord setValue:[NSNumber numberWithFloat:val] forKey:@"s"];
-                                 [graphData replaceObjectAtIndex:i withObject:mRecord];
-                             }
-                             break;
-                         case MODE_RAIN:
-                             // X Axis == time, Y Axis = rainfall
-                             for (int i = 0; i < [graphData count]; i++) {
-                                 NSMutableDictionary *mRecord = [[NSMutableDictionary alloc]initWithDictionary:[graphData objectAtIndex:i]];
-                                 Float32 val = [((NSNumber *)[mRecord objectForKey:@"r"])floatValue];
-                                 val *= 10.f; // Rain scaled up by 10
-                                 [mRecord setValue:[NSNumber numberWithFloat:val] forKey:@"r"];
-                                 [graphData replaceObjectAtIndex:i withObject:mRecord];
-                             }
-                             break;
-                     }
-                     if (establishLimits)
-                     {
-                         // Get range of data for graph limits
-                         Float32 loY = 1000.0;
-                         Float32 hiY = 0.0;
-                         Float32 overlap = 0;
-                         int yInterval = 1;
-                         switch(mode)
-                         {
-                             case MODE_TEMPERATURE:
-                                 // X Axis == time, Y Axis = temp
-                                 for (NSDictionary *record in graphData) {
-                                     Float32 val = [((NSNumber *)[record objectForKey:@"t"])floatValue];
-                                     if (val < loY) loY = val; if (val > hiY) hiY = val;
-                                 }
-                                 overlap = 3;
-                                 yInterval = 5;
-                                 break;
-                             case MODE_HUMIDITY:
-                                 // X Axis == time, Y Axis = humidity
-                                 for (NSDictionary *record in graphData) {
-                                     Float32 val = [((NSNumber *)[record objectForKey:@"h"])floatValue];
-                                     if (val < loY) loY = val; if (val > hiY) hiY = val;
-                                 }
-                                 overlap = 2;
-                                 yInterval = 10;
-                                 break;
-                             case MODE_WIND:
-                                 // X Axis == time, Y Axis = wind speed
-                                 for (NSDictionary *record in graphData) {
-                                     Float32 val = [((NSNumber *)[record objectForKey:@"s"])floatValue];
-                                     if (val < loY) loY = val; if (val > hiY) hiY = val;
-                                 }
-                                 overlap = 2;
-                                 yInterval = 2;
-                                 loY = 10;
-                                 hiY -= 5;
-                                 break;
-                             case MODE_RAIN:
-                                 // X Axis == time, Y Axis = rainfall
-                                 for (NSDictionary *record in graphData) {
-                                     Float32 val = [((NSNumber *)[record objectForKey:@"r"])floatValue];
-                                     if (val < loY) loY = val; if (val > hiY) hiY = val;
-                                 }
-                                 overlap = 2;
-                                 yInterval = 5;
-                                 loY = 10;
-                                 hiY -= 5;
-                                 break;
-                         }
-                         loY -= 10;
-                         hiY += 10;
-                         CPTXYAxisSet *axisSet = (CPTXYAxisSet *)(graph.axisSet);
-                         NSMutableSet *majorTicks = [[NSMutableSet alloc]init];
-                         NSMutableSet *majorLabels = [[NSMutableSet alloc]init];
-                         NSMutableSet *minorTicks = [[NSMutableSet alloc]init];
-                         for (int i = loY; i <= hiY; i++)
-                         {
-                             if (i % yInterval == 0)
-                             {
-                                 [majorTicks addObject:[NSNumber numberWithInt:i]];
-                                 CPTAxisLabel *newLabel = [[CPTAxisLabel alloc] initWithText:[NSString stringWithFormat:@"%d", i]
-                                                                                   textStyle:axisSet.yAxis.labelTextStyle];
-                                 newLabel.tickLocation = [[NSNumber numberWithInt:i] decimalValue];
-                                 newLabel.offset = axisSet.yAxis.labelOffset + axisSet.yAxis.majorTickLength;
-                                 [majorLabels addObject:newLabel];
-                             }
-                             [minorTicks addObject:[NSNumber numberWithInt:i]];
-                         }
-                         CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)graph.defaultPlotSpace;
-                         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0-overlap)
-                                                                         length:CPTDecimalFromFloat(96*3+overlap)];
-                         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(loY-overlap)
-                                                                         length:CPTDecimalFromFloat(hiY-loY+overlap)];
-                         axisSet.yAxis.majorTickLocations = majorTicks;
-                         axisSet.yAxis.minorTickLocations = minorTicks;
-                         axisSet.yAxis.axisLabels =  majorLabels;
-                         axisSet.yAxis.labelingPolicy = CPTAxisLabelingPolicyNone;
-                         axisSet.xAxis.orthogonalCoordinateDecimal = CPTDecimalFromFloat(loY);
-                         axisSet.xAxis.gridLinesRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(loY)
-                                                                                     length:CPTDecimalFromFloat(hiY)];
-                     }
-                     if (sensor == 1) graphData1 = [[NSMutableArray alloc]initWithArray:graphData];
-                     if (sensor == 2) graphData2 = [[NSMutableArray alloc]initWithArray:graphData];
-                     if (drawGraph) [graph reloadData];
-                     [SVProgressHUD dismiss];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:URL,sensor,date,source]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
+                  {
+                     [self displayGraphForSensor:sensor
+                                        withJSON:JSON
+                                 establishLimits:hasSensor1Data && hasSensor2Data
+                                    andDrawGraph:hasSensor1Data && hasSensor2Data];
                  }
-                                                                failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON)
-                 {
-                     DEBUGLog(@"%@", error);
-                     [SVProgressHUD dismiss];
-                 }];
-    [SVProgressHUD showWithStatus:@"Loading..."];
+                                                                                        failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON)
+                {
+                    DEBUGLog(@"%@", error);
+                    [SVProgressHUD dismiss];
+                }];
     [operation start];
 }
 
+- (void)displayDialWithJSON:(NSString *)JSON
+{
+    DEBUGLog(@"%@", JSON);
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    NSNumber *value = nil;
+    float angle;
+    NSString *display;
+    switch(mode)
+    {
+        case MODE_TEMPERATURE:
+            value = [formatter numberFromString:[JSON valueForKey: @"Temperature"]];
+            angle = ([value floatValue]-10) / 20 * M_PI * 1.74; // Range is 10-30 degrees Centigrade
+            display = [NSString stringWithFormat:@"%2.1f \u00B0C", [value floatValue]];
+            break;
+        case MODE_CALIBRATE:
+            value = @(30);
+            angle = ([value floatValue]-10) / 20 * M_PI * 1.74;
+            display = [NSString stringWithFormat:@"%2.1f \u00B0C", [value floatValue]];
+            break;
+        case MODE_HUMIDITY:
+            value = [formatter numberFromString:[JSON valueForKey: @"Humidity"]];
+            angle = ([value floatValue]-30) / 40 * M_PI * 1.74; // Range is 30-70 % Humidity
+            display = [NSString stringWithFormat:@"%2.1f %% RH", [value floatValue]];
+            break;
+        case MODE_RAIN:
+            value = [formatter numberFromString:[JSON valueForKey: @"Rainfall"]];
+            angle = [value floatValue] / 10 * M_PI * 1.74; // Range is 0-10 mm
+            display = [NSString stringWithFormat:@"%2.1f mm", [value floatValue]];
+            break;
+        case MODE_WIND:
+            value = [formatter numberFromString:[JSON valueForKey: @"Wind"]];
+            angle = [value floatValue] / 50 * M_PI * 1.74; // Range is 0-50 m/s
+            display = [NSString stringWithFormat:@"%2.1f m/s", [value floatValue]];
+            break;
+    }
+    [SVProgressHUD dismiss];
+    if (value == nil) return;
+    
+    if (angle < 0) angle = 0;
+    if (angle > M_PI * 1.74) angle = M_PI * 1.74;
+    
+    if (abs (angle-lastAngle) < M_PI)
+    {
+        [UIView animateWithDuration:1.0
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^() {
+                             arrowImageView.transform = CGAffineTransformMakeRotation(angle);
+                         }
+                         completion:^(BOOL finished) {}];
+    }
+    else // > 180 degreees, so go in two jumps or the needle will move anticlockwise
+    {
+        [UIView animateWithDuration:1.5
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseIn
+                         animations:^() {
+                             arrowImageView.transform = CGAffineTransformMakeRotation((angle+lastAngle)/2);
+                         }
+                         completion:^(BOOL finished) {
+                             [UIView animateWithDuration:1.5
+                                                   delay:0
+                                                 options:UIViewAnimationOptionCurveEaseOut
+                                              animations:^() {
+                                                  arrowImageView.transform = CGAffineTransformMakeRotation(angle);
+                                              }
+                                              completion:^(BOOL finished) {}];
+                         }];
+    }
+    lastAngle=angle;
+    _reading.text = display;
+}
+
+- (void)displayGraphForSensor:(NSInteger)sensor
+                     withJSON:(id)JSON
+              establishLimits:(BOOL)establishLimits
+                 andDrawGraph:(BOOL)drawGraph
+{
+    DEBUGLog(@"%@", JSON);
+    NSMutableArray *graphData = [[NSMutableArray alloc]initWithArray:JSON];
+    // Initial scaling of data (Wind to MPH etc)
+    switch(mode)
+    {
+        case MODE_WIND:
+            // X Axis == time, Y Axis = wind speed
+            for (int i = 0; i < [graphData count]; i++) {
+                NSMutableDictionary *mRecord = [[NSMutableDictionary alloc]initWithDictionary:[graphData objectAtIndex:i]];
+                Float32 val = [((NSNumber *)[mRecord objectForKey:@"s"])floatValue];
+                val *= 2.23693629; // Wind show in MPH
+                [mRecord setValue:@(val) forKey:@"s"];
+                [graphData replaceObjectAtIndex:i withObject:mRecord];
+            }
+            break;
+        case MODE_RAIN:
+            // X Axis == time, Y Axis = rainfall
+            for (int i = 0; i < [graphData count]; i++) {
+                NSMutableDictionary *mRecord = [[NSMutableDictionary alloc]initWithDictionary:[graphData objectAtIndex:i]];
+                Float32 val = [((NSNumber *)[mRecord objectForKey:@"r"])floatValue];
+                val *= 10.f; // Rain scaled up by 10
+                [mRecord setValue:@(val) forKey:@"r"];
+                [graphData replaceObjectAtIndex:i withObject:mRecord];
+            }
+            break;
+    }
+    if (establishLimits)
+    {
+        // Get range of data for graph limits
+        Float32 loY = 1000.0;
+        Float32 hiY = 0.0;
+        Float32 overlap = 0;
+        int yInterval = 1;
+        switch(mode)
+        {
+            case MODE_TEMPERATURE:
+                // X Axis == time, Y Axis = temp
+                for (NSDictionary *record in graphData) {
+                    Float32 val = [((NSNumber *)[record objectForKey:@"t"])floatValue];
+                    if (val < loY) loY = val; if (val > hiY) hiY = val;
+                }
+                overlap = 3;
+                yInterval = 5;
+                break;
+            case MODE_HUMIDITY:
+                // X Axis == time, Y Axis = humidity
+                for (NSDictionary *record in graphData) {
+                    Float32 val = [((NSNumber *)[record objectForKey:@"h"])floatValue];
+                    if (val < loY) loY = val; if (val > hiY) hiY = val;
+                }
+                overlap = 2;
+                yInterval = 10;
+                break;
+            case MODE_WIND:
+                // X Axis == time, Y Axis = wind speed
+                for (NSDictionary *record in graphData) {
+                    Float32 val = [((NSNumber *)[record objectForKey:@"s"])floatValue];
+                    if (val < loY) loY = val; if (val > hiY) hiY = val;
+                }
+                overlap = 2;
+                yInterval = 2;
+                loY = 10;
+                hiY -= 5;
+                break;
+            case MODE_RAIN:
+                // X Axis == time, Y Axis = rainfall
+                for (NSDictionary *record in graphData) {
+                    Float32 val = [((NSNumber *)[record objectForKey:@"r"])floatValue];
+                    if (val < loY) loY = val; if (val > hiY) hiY = val;
+                }
+                overlap = 2;
+                yInterval = 5;
+                loY = 10;
+                hiY -= 5;
+                break;
+        }
+        loY -= 10;
+        hiY += 10;
+        CPTXYAxisSet *axisSet = (CPTXYAxisSet *)(graph.axisSet);
+        NSMutableSet *majorTicks = [[NSMutableSet alloc]init];
+        NSMutableSet *majorLabels = [[NSMutableSet alloc]init];
+        NSMutableSet *minorTicks = [[NSMutableSet alloc]init];
+        for (int i = loY; i <= hiY; i++)
+        {
+            if (i % yInterval == 0)
+            {
+                [majorTicks addObject:@(i)];
+                CPTAxisLabel *newLabel = [[CPTAxisLabel alloc] initWithText:[NSString stringWithFormat:@"%d", i]
+                                                                  textStyle:axisSet.yAxis.labelTextStyle];
+                newLabel.tickLocation = [@(i) decimalValue];
+                newLabel.offset = axisSet.yAxis.labelOffset + axisSet.yAxis.majorTickLength;
+                [majorLabels addObject:newLabel];
+            }
+            [minorTicks addObject:@(i)];
+        }
+        CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)graph.defaultPlotSpace;
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0-overlap)
+                                                        length:CPTDecimalFromFloat(96*3+overlap)];
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(loY-overlap)
+                                                        length:CPTDecimalFromFloat(hiY-loY+overlap)];
+        axisSet.yAxis.majorTickLocations = majorTicks;
+        axisSet.yAxis.minorTickLocations = minorTicks;
+        axisSet.yAxis.axisLabels =  majorLabels;
+        axisSet.yAxis.labelingPolicy = CPTAxisLabelingPolicyNone;
+        axisSet.xAxis.orthogonalCoordinateDecimal = CPTDecimalFromFloat(loY);
+        axisSet.xAxis.gridLinesRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(loY)
+                                                                    length:CPTDecimalFromFloat(hiY)];
+    }
+    if (sensor == 1)
+    {
+        graphData1 = [[NSMutableArray alloc]initWithArray:graphData];
+        _legend1Label.textColor = [UIColor whiteColor];
+        _legend1Label.text = @"Raspberry";
+        _legend1Label.hidden = NO;
+    }
+    if (sensor == 2)
+    {
+        graphData2 = [[NSMutableArray alloc]initWithArray:graphData];
+        _legend2Label.textColor = [UIColor lightGrayColor];
+        _legend2Label.text = @"Arduino";
+        _legend2Label.hidden = NO;
+    }
+    if (drawGraph) [graph reloadData];
+    if (drawGraph) [SVProgressHUD dismiss];
+}
 @end

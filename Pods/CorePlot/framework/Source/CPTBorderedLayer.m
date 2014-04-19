@@ -202,10 +202,9 @@
 {
     [super sublayerMarginLeft:left top:top right:right bottom:bottom];
 
-    CPTLineStyle *theLineStyle = self.borderLineStyle;
-    if ( theLineStyle ) {
-        CGFloat inset = theLineStyle.lineWidth * CPTFloat(0.5);
+    CGFloat inset = self.borderLineStyle.lineWidth * CPTFloat(0.5);
 
+    if ( inset > CPTFloat(0.0) ) {
         *left   += inset;
         *top    += inset;
         *right  += inset;
@@ -361,7 +360,7 @@
         [super setMasksToBorder:newMasksToBorder];
 
         if ( newMasksToBorder ) {
-            CPTMaskLayer *maskLayer = [[CPTMaskLayer alloc] initWithFrame:self.bounds];
+            CPTMaskLayer *maskLayer = [(CPTMaskLayer *)[CPTMaskLayer alloc] initWithFrame : self.bounds];
             [maskLayer setNeedsDisplay];
             self.mask = maskLayer;
             [maskLayer release];
@@ -384,7 +383,7 @@
         // check layer structure
         if ( superLayer ) {
             if ( ![superLayer isKindOfClass:[CPTBorderLayer class]] ) {
-                CPTBorderLayer *newBorderLayer = [[CPTBorderLayer alloc] initWithFrame:self.frame];
+                CPTBorderLayer *newBorderLayer = [(CPTBorderLayer *)[CPTBorderLayer alloc] initWithFrame : self.frame];
                 newBorderLayer.maskedLayer = self;
 
                 [superLayer replaceSublayer:self with:newBorderLayer];

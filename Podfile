@@ -1,6 +1,6 @@
-platform :ios, '6.0'
+platform :ios, '7.1'
 
 pod 'AFNetworking',     '~> 1.0'
-pod 'CorePlot',         '~> 1.3'
+pod 'CorePlot',         '~> 1.5'
 pod 'NSLogger',         '~> 1.1'
-pod 'SVProgressHUD'
+pod 'SVProgressHUD',    :head

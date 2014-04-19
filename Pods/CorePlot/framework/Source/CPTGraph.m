@@ -147,7 +147,7 @@ NSString *const CPTGraphNeedsRedrawNotification = @"CPTGraphNeedsRedrawNotificat
  *  only—the legend may be inserted in the layer tree and positioned like any other CPTLayer
  *  if more flexibility is needed.
  **/
-@dynamic legend;
+@synthesize legend;
 
 /** @property CPTRectAnchor legendAnchor
  *  @brief The location of the legend with respect to the graph frame.
@@ -666,11 +666,6 @@ NSString *const CPTGraphNeedsRedrawNotification = @"CPTGraphNeedsRedrawNotificat
 
 /// @cond
 
--(CPTLegend *)legend
-{
-    return (CPTLegend *)self.legendAnnotation.contentLayer;
-}
-
 -(void)setLegend:(CPTLegend *)newLegend
 {
     if ( newLegend != legend ) {
@@ -727,7 +722,7 @@ NSString *const CPTGraphNeedsRedrawNotification = @"CPTGraphNeedsRedrawNotificat
 
     switch ( anchor ) {
         case CPTRectAnchorBottomLeft:
-            contentAnchor = CPTPointMake(0.0, 0.0);
+            contentAnchor = CGPointZero;
             break;
 
         case CPTRectAnchorBottom:
@@ -953,10 +948,11 @@ NSString *const CPTGraphNeedsRedrawNotification = @"CPTGraphNeedsRedrawNotificat
  *  -# All plots in reverse order (i.e., from front to back in the layer order)
  *  -# The axis set
  *  -# The plot area
+ *  -# The legend
  *
  *  If any layer handles the event, subsequent layers are not notified and
  *  this method immediately returns @YES. If none of the layers
- *  handle the event, it is passed to all plot spaces whether or not they handle it or not.
+ *  handle the event, it is passed to all plot spaces whether they handle it or not.
  *
  *  @param event The OS event.
  *  @param interactionPoint The coordinates of the interaction.
@@ -981,6 +977,11 @@ NSString *const CPTGraphNeedsRedrawNotification = @"CPTGraphNeedsRedrawNotificat
         return YES;
     }
 
+    // Legend
+    if ( [self.legend pointingDeviceDownEvent:event atPoint:interactionPoint] ) {
+        return YES;
+    }
+
     // Plot spaces
     // Plot spaces do not block events, because several spaces may need to receive
     // the same event sequence (e.g., dragging coordinate translation)
@@ -990,7 +991,12 @@ NSString *const CPTGraphNeedsRedrawNotification = @"CPTGraphNeedsRedrawNotificat
         handledEvent |= handled;
     }
 
-    return handledEvent;
+    if ( handledEvent ) {
+        return YES;
+    }
+    else {
+        return [super pointingDeviceDownEvent:event atPoint:interactionPoint];
+    }
 }
 
 /**
@@ -1003,10 +1009,11 @@ NSString *const CPTGraphNeedsRedrawNotification = @"CPTGraphNeedsRedrawNotificat
  *  -# All plots in reverse order (i.e., from front to back in the layer order)
  *  -# The axis set
  *  -# The plot area
+ *  -# The legend
  *
  *  If any layer handles the event, subsequent layers are not notified and
  *  this method immediately returns @YES. If none of the layers
- *  handle the event, it is passed to all plot spaces whether or not they handle it or not.
+ *  handle the event, it is passed to all plot spaces whether they handle it or not.
  *
  *  @param event The OS event.
  *  @param interactionPoint The coordinates of the interaction.
@@ -1031,6 +1038,11 @@ NSString *const CPTGraphNeedsRedrawNotification = @"CPTGraphNeedsRedrawNotificat
         return YES;
     }
 
+    // Legend
+    if ( [self.legend pointingDeviceUpEvent:event atPoint:interactionPoint] ) {
+        return YES;
+    }
+
     // Plot spaces
     // Plot spaces do not block events, because several spaces may need to receive
     // the same event sequence (e.g., dragging coordinate translation)
@@ -1040,7 +1052,12 @@ NSString *const CPTGraphNeedsRedrawNotification = @"CPTGraphNeedsRedrawNotificat
         handledEvent |= handled;
     }
 
-    return handledEvent;
+    if ( handledEvent ) {
+        return YES;
+    }
+    else {
+        return [super pointingDeviceUpEvent:event atPoint:interactionPoint];
+    }
 }
 
 /**
@@ -1053,10 +1070,11 @@ NSString *const CPTGraphNeedsRedrawNotification = @"CPTGraphNeedsRedrawNotificat
  *  -# All plots in reverse order (i.e., from front to back in the layer order)
  *  -# The axis set
  *  -# The plot area
+ *  -# The legend
  *
  *  If any layer handles the event, subsequent layers are not notified and
  *  this method immediately returns @YES. If none of the layers
- *  handle the event, it is passed to all plot spaces whether or not they handle it or not.
+ *  handle the event, it is passed to all plot spaces whether they handle it or not.
  *
  *  @param event The OS event.
  *  @param interactionPoint The coordinates of the interaction.
@@ -1081,6 +1099,11 @@ NSString *const CPTGraphNeedsRedrawNotification = @"CPTGraphNeedsRedrawNotificat
         return YES;
     }
 
+    // Legend
+    if ( [self.legend pointingDeviceDraggedEvent:event atPoint:interactionPoint] ) {
+        return YES;
+    }
+
     // Plot spaces
     // Plot spaces do not block events, because several spaces may need to receive
     // the same event sequence (e.g., dragging coordinate translation)
@@ -1090,7 +1113,12 @@ NSString *const CPTGraphNeedsRedrawNotification = @"CPTGraphNeedsRedrawNotificat
         handledEvent |= handled;
     }
 
-    return handledEvent;
+    if ( handledEvent ) {
+        return YES;
+    }
+    else {
+        return [super pointingDeviceDraggedEvent:event atPoint:interactionPoint];
+    }
 }
 
 /**
@@ -1104,10 +1132,11 @@ NSString *const CPTGraphNeedsRedrawNotification = @"CPTGraphNeedsRedrawNotificat
  *  -# All plots in reverse order (i.e., from front to back in the layer order)
  *  -# The axis set
  *  -# The plot area
+ *  -# The legend
  *
  *  If any layer handles the event, subsequent layers are not notified and
  *  this method immediately returns @YES. If none of the layers
- *  handle the event, it is passed to all plot spaces whether or not they handle it or not.
+ *  handle the event, it is passed to all plot spaces whether they handle it or not.
  *
  *  @param event The OS event.
  *  @return Whether the event was handled or not.
@@ -1131,6 +1160,11 @@ NSString *const CPTGraphNeedsRedrawNotification = @"CPTGraphNeedsRedrawNotificat
         return YES;
     }
 
+    // Legend
+    if ( [self.legend pointingDeviceCancelledEvent:event] ) {
+        return YES;
+    }
+
     // Plot spaces
     BOOL handledEvent = NO;
     for ( CPTPlotSpace *space in self.plotSpaces ) {
@@ -1138,7 +1172,12 @@ NSString *const CPTGraphNeedsRedrawNotification = @"CPTGraphNeedsRedrawNotificat
         handledEvent |= handled;
     }
 
-    return handledEvent;
+    if ( handledEvent ) {
+        return YES;
+    }
+    else {
+        return [super pointingDeviceCancelledEvent:event];
+    }
 }
 
 /// @}

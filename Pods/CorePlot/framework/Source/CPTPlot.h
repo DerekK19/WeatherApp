@@ -197,6 +197,7 @@ CPTPlotCachePrecision;
     NSUInteger cachedDataCount;
     CPTPlotCachePrecision cachePrecision;
     BOOL needsRelabel;
+    BOOL adjustLabelAnchors;
     BOOL showLabels;
     CGFloat labelOffset;
     CGFloat labelRotation;
@@ -207,6 +208,7 @@ CPTPlotCachePrecision;
     NSMutableArray *labelAnnotations;
     CPTShadow *labelShadow;
     BOOL alignsPointsToPixels;
+    BOOL drawLegendSwatchDecoration;
 }
 
 /// @name Data Source
@@ -247,6 +249,7 @@ CPTPlotCachePrecision;
 /// @name Data Labels
 /// @{
 @property (nonatomic, readonly, assign) BOOL needsRelabel;
+@property (nonatomic, readwrite, assign) BOOL adjustLabelAnchors;
 @property (nonatomic, readwrite, assign) BOOL showLabels;
 @property (nonatomic, readwrite, assign) CGFloat labelOffset;
 @property (nonatomic, readwrite, assign) CGFloat labelRotation;
@@ -259,6 +262,11 @@ CPTPlotCachePrecision;
 /// @name Drawing
 /// @{
 @property (nonatomic, readwrite, assign) BOOL alignsPointsToPixels;
+/// @}
+
+/// @name Legends
+/// @{
+@property (nonatomic, readwrite, assign) BOOL drawLegendSwatchDecoration;
 /// @}
 
 /// @name Data Labels
