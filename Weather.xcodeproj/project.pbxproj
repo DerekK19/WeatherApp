@@ -83,7 +83,6 @@
 		65AF6A901532697300D79E7C /* gauge-background-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gauge-background-2.png"; path = "images/gauge-background-2.png"; sourceTree = "<group>"; };
 		65B8490E16E7083300F6202E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		65B948EF1856D1E50094BD5E /* Weather-cal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather-cal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		65C5253416E5B0FE000CFC1C /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		65C5253616E5B458000CFC1C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		65C5253816E5B464000CFC1C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		ADADC52271B44D6A8D52BB68 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -129,7 +128,6 @@
 			children = (
 				650B13971706ACD70053D00C /* Weather.plist */,
 				659C0C5D1706735D00BD6B60 /* Logging.h */,
-				65C5253416E5B0FE000CFC1C /* Podfile */,
 				657FA64A152D720100AD7E75 /* Weather */,
 				657FA643152D720100AD7E75 /* Frameworks */,
 				657FA641152D720100AD7E75 /* Products */,

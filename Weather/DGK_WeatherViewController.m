@@ -14,8 +14,11 @@
 
 @interface DGK_WeatherViewController ()
 {
-    BOOL hasSensor1Data;
-    BOOL hasSensor2Data;
+    BOOL _hasSensor1Data;
+    BOOL _hasSensor2Data;
+    UIColor *_backgroundColour;
+    CPTColor *_alternateBandColour1;
+    CPTColor *_alternateBandColour2;
 }
 
 @end
@@ -30,6 +33,9 @@
     when = [NSDate date];
     
     _contentView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"wood-grain"]];
+    _backgroundColour = [UIColor colorWithRed:(16.0/255.0) green:(16.0/255.0) blue:(54.0/255.0) alpha:1.0];
+    _alternateBandColour1 = [CPTColor colorWithComponentRed:(16.0/255.0) green:(16.0/255.0) blue:(54.0/255.0) alpha:1.0];
+    _alternateBandColour2 = [CPTColor colorWithComponentRed:(16.0/255.0) green:(16.0/255.0) blue:(108.0/255.0) alpha:1.0];
     
     UIImage *needleImage = [UIImage imageNamed:@"gauge-needle.png"];
     arrowImageView = [[UIImageView alloc] initWithImage:needleImage];
@@ -38,123 +44,6 @@
     
     arrowImageView.layer.anchorPoint = CGPointMake(0.5, 0.13);
     arrowImageView.opaque = YES;
-    
-    graph = [[CPTXYGraph alloc] initWithFrame: _graphView.bounds];
-    
-    _graphView.backgroundColor = [UIColor colorWithRed:(16.0/255.0) green:(16.0/255.0) blue:(54.0/255.0) alpha:1.0],
-    _graphView.hostedGraph = graph;
-    graph.plotAreaFrame.masksToBorder = NO;
-    graph.paddingLeft = 35.0;
-    graph.paddingTop = 10.0;
-    graph.paddingRight = 10.0;
-    graph.paddingBottom = 45.0;
-
-    CPTMutableLineStyle *axisLine = [CPTMutableLineStyle lineStyle];
-    axisLine.lineColor = [CPTColor whiteColor];
-    axisLine.lineWidth = 2.0f;
-    CPTMutableLineStyle *gridLine = [CPTMutableLineStyle lineStyle];
-    gridLine.lineColor = [[CPTColor whiteColor] colorWithAlphaComponent:0.4];
-    gridLine.lineWidth = 1.0f;
-    CPTMutableLineStyle *plotLine1 = [CPTMutableLineStyle lineStyle];
-    plotLine1.lineWidth = 2.0f;
-    plotLine1.lineColor = [CPTColor whiteColor];
-    CPTMutableLineStyle *plotLine2 = [CPTMutableLineStyle lineStyle];
-    plotLine2.lineWidth = 2.0f;
-    plotLine2.lineColor = [CPTColor lightGrayColor];
-    
-    CPTMutableTextStyle *axisText = [CPTTextStyle textStyle];
-    axisText.color = [CPTColor whiteColor];
-    
-    CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
-    
-    axisSet.xAxis.majorIntervalLength = [@(4*3) decimalValue];
-    axisSet.xAxis.minorTicksPerInterval = 4*3;
-    axisSet.xAxis.majorTickLineStyle = axisLine;
-    axisSet.xAxis.minorTickLineStyle = axisLine;
-    axisSet.xAxis.axisLineStyle = axisLine;
-    axisSet.xAxis.minorTickLength = 5.0f;
-    axisSet.xAxis.majorTickLength = 7.0f;
-    axisSet.xAxis.labelOffset = 3.0f;
-    axisSet.xAxis.majorGridLineStyle = gridLine;
-    axisSet.xAxis.labelTextStyle = axisText;
-    axisSet.xAxis.labelExclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-40)
-                                                                        length:CPTDecimalFromFloat(40)]];
-    axisSet.xAxis.labelingPolicy = CPTAxisLabelingPolicyNone;
-    axisSet.xAxis.majorTickLocations = [[NSSet alloc]initWithArray:@[
-                                        @(8*3),
-//                                        @(16*3),
-                                        @(24*3),
-//                                        @(32*3),
-                                        @(40*3),
-//                                        @(48*3),
-                                        @(56*3),
-//                                        @(64*3),
-                                        @(72*3),
-//                                        @(80*3),
-                                        @(88*3),
-//                                        @(96*3),
-                                        ]];
-    NSArray *xAxisLabels = @[
-                            @"2am",
-//                            @"4am",
-                            @"6am",
-//                            @"8am",
-                            @"10am",
-//                            @"12pm",
-                            @"2pm",
-//                            @"4pm",
-                            @"6pm",
-//                            @"8pm",
-                            @"10pm",
-//                            @"12am",
-                            ];
-    NSUInteger labelLocation = 0;
-    NSMutableSet *customLabels = [NSMutableSet setWithCapacity:[xAxisLabels count]];
-    for (NSNumber *tickLocation in axisSet.xAxis.majorTickLocations)
-    {
-        CPTAxisLabel *newLabel = [[CPTAxisLabel alloc] initWithText:[xAxisLabels objectAtIndex:labelLocation++]
-                                                          textStyle:axisSet.xAxis.labelTextStyle];
-        newLabel.tickLocation = [@((labelLocation*2-1)*8*3) decimalValue];
-        newLabel.offset = axisSet.xAxis.labelOffset + axisSet.xAxis.majorTickLength;
-        newLabel.rotation = M_PI_2;
-        [customLabels addObject:newLabel];
-    }
-    axisSet.xAxis.axisLabels = customLabels;
-
-    axisSet.yAxis.majorIntervalLength = [@(10) decimalValue];
-    axisSet.yAxis.minorTicksPerInterval = 10;
-    axisSet.yAxis.majorTickLineStyle = axisLine;
-    axisSet.yAxis.minorTickLineStyle = axisLine;
-    axisSet.yAxis.majorGridLineStyle = gridLine;
-    axisSet.yAxis.axisLineStyle = axisLine;
-    axisSet.yAxis.minorTickLength = 5.0f;
-    axisSet.yAxis.majorTickLength = 7.0f;
-    axisSet.yAxis.labelOffset = 3.0f;
-    axisSet.yAxis.labelTextStyle = axisText;
-    axisSet.yAxis.alternatingBandFills = @[
-                                           [CPTColor colorWithComponentRed:(16.0/255.0) green:(16.0/255.0) blue:(54.0/255.0) alpha:1.0],
-                                           [CPTColor colorWithComponentRed:(16.0/255.0) green:(16.0/255.0) blue:(108.0/255.0) alpha:1.0]
-                                           ];
-
-    CPTScatterPlot *sensor1plot = [[CPTScatterPlot alloc] initWithFrame:graph.defaultPlotSpace.accessibilityFrame];
-    sensor1plot.interpolation = CPTScatterPlotInterpolationCurved;
-    sensor1plot.identifier = @(1);
-    sensor1plot.dataLineStyle = plotLine1;
-    sensor1plot.dataSource = self;
-    [graph addPlot:sensor1plot];
-    CPTScatterPlot *sensor2plot = [[CPTScatterPlot alloc] initWithFrame:graph.defaultPlotSpace.accessibilityFrame];
-    sensor2plot.interpolation = CPTScatterPlotInterpolationCurved;
-    sensor2plot.identifier = @(2);
-    sensor2plot.dataLineStyle = plotLine2;
-    sensor2plot.dataSource = self;
-    [graph addPlot:sensor2plot];
-    
-//    CPTPlotSymbol *dataPointSymbol = [CPTPlotSymbol ellipsePlotSymbol];
-//    dataPointSymbol.fill = [CPTFill fillWithColor:[CPTColor blackColor]];
-//    dataPointSymbol.size = CGSizeMake(2.0, 2.0);
-//    tempPlot.plotSymbol = dataPointSymbol;  
-    
-    [self willRefresh:nil];
     
     [self willChangeView:nil];
 }
@@ -282,8 +171,9 @@
     {
         _legend1Label.hidden = YES;
         _legend2Label.hidden = YES;
-        hasSensor1Data = NO;
-        hasSensor2Data = NO;
+        _hasSensor1Data = NO;
+        _hasSensor2Data = NO;
+        [self willResetGraph];
         [self willCaptureDataForSensor:2];
         [self willCaptureDataForSensor:1];
     }
@@ -341,6 +231,123 @@
     [self willRefresh:nil];
 }
 
+- (void)willResetGraph
+{
+    graph = [[CPTXYGraph alloc] initWithFrame: _graphView.bounds];
+    
+    _graphView.backgroundColor = _backgroundColour;
+    _graphView.hostedGraph = graph;
+    graph.plotAreaFrame.masksToBorder = NO;
+    graph.paddingLeft = 35.0;
+    graph.paddingTop = 10.0;
+    graph.paddingRight = 10.0;
+    graph.paddingBottom = 45.0;
+    
+    CPTMutableLineStyle *axisLine = [CPTMutableLineStyle lineStyle];
+    axisLine.lineColor = [CPTColor whiteColor];
+    axisLine.lineWidth = 2.0f;
+    CPTMutableLineStyle *gridLine = [CPTMutableLineStyle lineStyle];
+    gridLine.lineColor = [[CPTColor whiteColor] colorWithAlphaComponent:0.4];
+    gridLine.lineWidth = 1.0f;
+    CPTMutableLineStyle *plotLine1 = [CPTMutableLineStyle lineStyle];
+    plotLine1.lineWidth = 2.0f;
+    plotLine1.lineColor = [CPTColor whiteColor];
+    CPTMutableLineStyle *plotLine2 = [CPTMutableLineStyle lineStyle];
+    plotLine2.lineWidth = 2.0f;
+    plotLine2.lineColor = [CPTColor lightGrayColor];
+    
+    CPTMutableTextStyle *axisText = [CPTTextStyle textStyle];
+    axisText.color = [CPTColor whiteColor];
+    
+    CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
+    
+    axisSet.xAxis.majorIntervalLength = [@(4*3) decimalValue];
+    axisSet.xAxis.minorTicksPerInterval = 4*3;
+    axisSet.xAxis.majorTickLineStyle = axisLine;
+    axisSet.xAxis.minorTickLineStyle = axisLine;
+    axisSet.xAxis.axisLineStyle = axisLine;
+    axisSet.xAxis.minorTickLength = 5.0f;
+    axisSet.xAxis.majorTickLength = 7.0f;
+    axisSet.xAxis.labelOffset = 3.0f;
+    axisSet.xAxis.majorGridLineStyle = gridLine;
+    axisSet.xAxis.labelTextStyle = axisText;
+    axisSet.xAxis.labelExclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-40)
+                                                                        length:CPTDecimalFromFloat(40)]];
+    axisSet.xAxis.labelingPolicy = CPTAxisLabelingPolicyNone;
+    axisSet.xAxis.majorTickLocations = [[NSSet alloc]initWithArray:@[
+                                                                     @(8*3),
+//                                        @(16*3),
+                                                                     @(24*3),
+//                                        @(32*3),
+                                                                     @(40*3),
+//                                        @(48*3),
+                                                                     @(56*3),
+//                                        @(64*3),
+                                                                     @(72*3),
+//                                        @(80*3),
+                                                                     @(88*3),
+//                                        @(96*3),
+                                                                     ]];
+    NSArray *xAxisLabels = @[
+                             @"2am",
+//                            @"4am",
+                             @"6am",
+//                            @"8am",
+                             @"10am",
+//                            @"12pm",
+                             @"2pm",
+//                            @"4pm",
+                             @"6pm",
+//                            @"8pm",
+                             @"10pm",
+//                            @"12am",
+                             ];
+    NSMutableSet *customLabels = [NSMutableSet setWithCapacity:[xAxisLabels count]];
+    for (int labelLocation = 0; labelLocation < axisSet.xAxis.majorTickLocations.count; labelLocation++)
+    {
+        CPTAxisLabel *newLabel = [[CPTAxisLabel alloc] initWithText:[xAxisLabels objectAtIndex:labelLocation]
+                                                          textStyle:axisSet.xAxis.labelTextStyle];
+        newLabel.tickLocation = [@((labelLocation*2-1)*8*3) decimalValue];
+        newLabel.offset = axisSet.xAxis.labelOffset + axisSet.xAxis.majorTickLength;
+        newLabel.rotation = M_PI_2;
+        [customLabels addObject:newLabel];
+    }
+    axisSet.xAxis.axisLabels = customLabels;
+    
+    axisSet.yAxis.majorIntervalLength = [@(10) decimalValue];
+    axisSet.yAxis.minorTicksPerInterval = 10;
+    axisSet.yAxis.majorTickLineStyle = axisLine;
+    axisSet.yAxis.minorTickLineStyle = axisLine;
+    axisSet.yAxis.majorGridLineStyle = gridLine;
+    axisSet.yAxis.axisLineStyle = axisLine;
+    axisSet.yAxis.minorTickLength = 5.0f;
+    axisSet.yAxis.majorTickLength = 7.0f;
+    axisSet.yAxis.labelOffset = 3.0f;
+    axisSet.yAxis.labelTextStyle = axisText;
+    axisSet.yAxis.alternatingBandFills = @[
+                                           _alternateBandColour1,
+                                           _alternateBandColour2
+                                           ];
+    
+    CPTScatterPlot *sensor1plot = [[CPTScatterPlot alloc] initWithFrame:graph.defaultPlotSpace.accessibilityFrame];
+    sensor1plot.interpolation = CPTScatterPlotInterpolationCurved;
+    sensor1plot.identifier = @(1);
+    sensor1plot.dataLineStyle = plotLine1;
+    sensor1plot.dataSource = self;
+    [graph addPlot:sensor1plot];
+    CPTScatterPlot *sensor2plot = [[CPTScatterPlot alloc] initWithFrame:graph.defaultPlotSpace.accessibilityFrame];
+    sensor2plot.interpolation = CPTScatterPlotInterpolationCurved;
+    sensor2plot.identifier = @(2);
+    sensor2plot.dataLineStyle = plotLine2;
+    sensor2plot.dataSource = self;
+    [graph addPlot:sensor2plot];
+    
+//    CPTPlotSymbol *dataPointSymbol = [CPTPlotSymbol ellipsePlotSymbol];
+//    dataPointSymbol.fill = [CPTFill fillWithColor:[CPTColor blackColor]];
+//    dataPointSymbol.size = CGSizeMake(2.0, 2.0);
+//    tempPlot.plotSymbol = dataPointSymbol;
+}
+
 - (void)willCaptureDataNow
 {
     [SVProgressHUD setBackgroundColor:[UIColor clearColor]];
@@ -349,19 +356,17 @@
     [SVProgressHUD showWithStatus:@"Loading"];
 
     NSURL *url = [NSURL URLWithString:@"http://xyzzy.gordonknight.co.uk:8080/weather/current.json"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
-                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
-                 {
-                     [self displayDialWithJSON:JSON];
-                 }
-         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON)
-                 {
-                     DEBUGLog(@"%@", error);
-                     [SVProgressHUD dismiss];
-                 }];
-    [operation start];
+    [[AFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:url]
+                                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
+      {
+          [self displayDialWithJSON:JSON];
+      }
+                                                     failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON)
+      {
+          DEBUGLog(@"%@", error);
+          [SVProgressHUD dismiss];
+      }] start];
 }
 
 - (void)willCaptureDataForSensor:(NSInteger)sensor
@@ -371,8 +376,8 @@
     [SVProgressHUD setOffsetFromCenter:UIOffsetMake(0.f, 40.f)];
     [SVProgressHUD showWithStatus:@"Loading"];
 
-    if (sensor == 1) hasSensor1Data = YES;
-    if (sensor == 2) hasSensor2Data = YES;
+    if (sensor == 1) _hasSensor1Data = YES;
+    if (sensor == 2) _hasSensor2Data = YES;
     
     NSString *source = mode == MODE_TEMPERATURE ? @"temperature" :
                        mode == MODE_HUMIDITY ? @"humidity" :
@@ -385,23 +390,21 @@
     NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     NSString *date =[formatter stringFromDate:when];
-    
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:URL,sensor,date,source]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
-                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
-                  {
-                     [self displayGraphForSensor:sensor
-                                        withJSON:JSON
-                                 establishLimits:hasSensor1Data && hasSensor2Data
-                                    andDrawGraph:hasSensor1Data && hasSensor2Data];
-                 }
-                                                                                        failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON)
-                {
-                    DEBUGLog(@"%@", error);
-                    [SVProgressHUD dismiss];
-                }];
-    [operation start];
+    
+    [[AFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:url]
+                                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
+      {
+          [self displayGraphForSensor:sensor
+                             withJSON:JSON
+                      establishLimits:_hasSensor1Data && _hasSensor2Data
+                         andDrawGraph:_hasSensor1Data && _hasSensor2Data];
+      }
+                                                     failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON)
+      {
+          DEBUGLog(@"%@", error);
+          [SVProgressHUD dismiss];
+      }] start];
 }
 
 - (void)displayDialWithJSON:(NSString *)JSON
