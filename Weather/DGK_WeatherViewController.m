@@ -330,13 +330,13 @@
                                            ];
     
     CPTScatterPlot *sensor1plot = [[CPTScatterPlot alloc] initWithFrame:graph.defaultPlotSpace.accessibilityFrame];
-    sensor1plot.interpolation = CPTScatterPlotInterpolationCurved;
+    sensor1plot.interpolation = CPTScatterPlotInterpolationHistogram;
     sensor1plot.identifier = @(1);
     sensor1plot.dataLineStyle = plotLine1;
     sensor1plot.dataSource = self;
     [graph addPlot:sensor1plot];
     CPTScatterPlot *sensor2plot = [[CPTScatterPlot alloc] initWithFrame:graph.defaultPlotSpace.accessibilityFrame];
-    sensor2plot.interpolation = CPTScatterPlotInterpolationCurved;
+    sensor2plot.interpolation = CPTScatterPlotInterpolationHistogram;
     sensor2plot.identifier = @(2);
     sensor2plot.dataLineStyle = plotLine2;
     sensor2plot.dataSource = self;
@@ -379,18 +379,11 @@
     if (sensor == 1) _hasSensor1Data = YES;
     if (sensor == 2) _hasSensor2Data = YES;
     
-    NSString *source = mode == MODE_TEMPERATURE ? @"temperature" :
-                       mode == MODE_HUMIDITY ? @"humidity" :
-                       mode == MODE_WIND ? @"wind" :
-                       mode == MODE_RAIN ? @"rain" : nil;
-    
-    if (source == nil) return;
-
-    NSString *URL = @"http://xyzzy.gordonknight.co.uk/weather/service/data/list?sensor=%d&when=%@&source=%@";
+    NSString *URL = @"http://xyzzy.gordonknight.co.uk/weather/service/data/list?sensor=%d&when=%@&source=all";
     NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     NSString *date =[formatter stringFromDate:when];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:URL,sensor,date,source]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:URL,sensor,date]];
     
     [[AFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:url]
                                                      success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
